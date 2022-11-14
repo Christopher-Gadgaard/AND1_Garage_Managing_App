@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AND1_Garage_Managing_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#DDD</item>
+        <item name="colorPrimaryVariant">#4CAF50</item>
+        <item name="colorOnPrimary">#1B5E20</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#DDD</item>
+        <item name="colorSecondaryVariant">#C8E6C9</item>
+        <item name="colorOnSecondary">#1B5E20</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#C8E6C9</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.AND1_Garage_Managing_App.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.AND1_Garage_Managing_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AND1_Garage_Managing_App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

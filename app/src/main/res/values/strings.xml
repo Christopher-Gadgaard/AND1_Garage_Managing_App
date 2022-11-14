@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">My Garage</string>
+    <string name="countDownTime">5:00</string>
+    <string name="open_button">Open</string>
+    <string name="close_button">Close</string>
+    <string name="light_button">Lights</string>
+    <string name="help_button">Help</string>
+    <string name="go_to_garage">Go To Garage</string>
+    <string name="myName">Christopher Holmelund Gadgaard</string>
+    <string name="email">Christopher.Holmelund@gmail.com</string>
+    <string name="license_plate_no">License Plate No</string>
+    <string name="time">22:00</string>
+    <string name="phoneNo">+45 30 30 53 69</string>
+    <string name="action_icon">action icon</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="garage_timer_fragment_label">Garage Timer Fragment</string>
+    <string name="garage_entry_list_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>

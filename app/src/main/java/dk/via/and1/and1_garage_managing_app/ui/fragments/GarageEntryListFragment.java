@@ -42,7 +42,7 @@ public class GarageEntryListFragment extends Fragment
 
         List<GarageEntry> garageEntries = new ArrayList<>();
 
-        User user = new User("Christopher","Gadgaard","+45 30 30 53 69","Christopher.Holmelund@gmail.com","CH 16 768",true);
+        User user = new User("Christopher","Gadgaard","+45 30 30 53 69","Christopher.Holmelund@gmail.com","CH 16 768",true); //TODO REPLACE THIS
         Date date = new Date(2022,11,14,0,56);
         GarageEntry garageEntry = new GarageEntry(user,date, GarageAction.OPEN_GATE);
 

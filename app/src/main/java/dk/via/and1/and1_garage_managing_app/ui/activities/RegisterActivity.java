@@ -1,6 +1,7 @@
 package dk.via.and1.and1_garage_managing_app.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +15,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import dk.via.and1.and1_garage_managing_app.R;
+import dk.via.and1.and1_garage_managing_app.ui.viewmodels.RegisterActivityViewModel;
 
 public class RegisterActivity extends AppCompatActivity
 {
+    RegisterActivityViewModel viewModel;
     TextInputLayout firstName, lastName, email, phoneNo, licensePlate, password, confirmPassword;
     Button doneButton;
-    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity
         password = findViewById(R.id.passwordPlateInputLayout);
         confirmPassword = findViewById(R.id.passwordConfirmPlateInputLayout);
 
-        mAuth = FirebaseAuth.getInstance(); //TODO MAYBE MOVE TO VIEWMODEL? ASK KASPER
+        viewModel = new ViewModelProvider(this).get(RegisterActivityViewModel.class);
+        viewModel.init();
     }
 
     public void register(View v)
@@ -94,8 +97,7 @@ public class RegisterActivity extends AppCompatActivity
 
 
         //Register the user in firebase
-
-        mAuth.createUserWithEmailAndPassword(emailTemp,passwordTemp).addOnCompleteListener(task ->
+        viewModel.getAuth().createUserWithEmailAndPassword(emailTemp,passwordTemp).addOnCompleteListener(task ->
         {
             if (task.isSuccessful())
             {

@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app;
+package dk.via.and1.and1_garage_managing_app.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageTimerBinding;
 
 public class GarageTimerFragment extends Fragment
 {
     private FragmentGarageTimerBinding binding;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentGarageTimerBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -25,7 +28,9 @@ public class GarageTimerFragment extends Fragment
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
+        binding.setGpsToGarageButton.setOnClickListener(view1 -> {
+            FirebaseAuth.getInstance().signOut();
+        });
     }
 
     @Override
@@ -34,4 +39,5 @@ public class GarageTimerFragment extends Fragment
         super.onDestroyView();
         binding = null;
     }
+
 }

@@ -7,10 +7,10 @@
     <string name="help_button">Help</string>
     <string name="go_to_garage">Go To Garage</string>
     <string name="myName">Christopher Holmelund Gadgaard</string>
-    <string name="email">Christopher.Holmelund@gmail.com</string>
+    <string name="email">Email</string>
     <string name="license_plate_no">License Plate No</string>
-    <string name="time">22:00</string>
-    <string name="phoneNo">+45 30 30 53 69</string>
+    <string name="time">22:00 AM</string>
+    <string name="phoneNo">Phone Number</string>
     <string name="action_icon">action icon</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -19,6 +19,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="garage_logo">Garage Logo</string>
+    <string name="update">Update</string>
+    <string name="done">done</string>
 </resources>

@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app;
+package dk.via.and1.and1_garage_managing_app.ui;
 
 import android.annotation.SuppressLint;
 import android.icu.text.SimpleDateFormat;
@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import dk.via.and1.and1_garage_managing_app.R;
+import dk.via.and1.and1_garage_managing_app.data.garage.GarageEntry;
 
 public class GarageEntryAdapter extends RecyclerView.Adapter<GarageEntryAdapter.ViewHolder>
 {
@@ -30,6 +33,7 @@ public class GarageEntryAdapter extends RecyclerView.Adapter<GarageEntryAdapter.
         View view = inflater.inflate(R.layout.fragment_garage_entry,parent,false);
         return new ViewHolder(view);
     }
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -50,7 +54,7 @@ public class GarageEntryAdapter extends RecyclerView.Adapter<GarageEntryAdapter.
         return garageEntries.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
         TextView name;

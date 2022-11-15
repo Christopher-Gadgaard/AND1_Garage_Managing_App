@@ -7,20 +7,35 @@
 
     <fragment
         android:id="@+id/GarageTimerFragment"
-        android:name="dk.via.and1.and1_garage_managing_app.GarageTimerFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.GarageTimerFragment"
         android:label="@string/garage_timer_fragment_label"
         tools:layout="@layout/fragment_garage_timer">
         <action
             android:id="@+id/action_GarageTimerFragment_to_GarageEntryListFragment"
-            app:destination="@id/GarageEntryListFragment" />
+            app:destination="@id/garageEntryListFragment" />
+        <action
+            android:id="@+id/action_GarageTimerFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
     </fragment>
     <fragment
-        android:id="@+id/GarageEntryListFragment"
-        android:name="dk.via.and1.and1_garage_managing_app.GarageEntryListFragment"
+        android:id="@+id/garageEntryListFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.GarageEntryListFragment"
         android:label="@string/garage_entry_list_fragment_label"
         tools:layout="@layout/fragment_garage_entry">
         <action
             android:id="@+id/action_GarageEntryListFragment_to_GarageTimerFragment"
+            app:destination="@id/GarageTimerFragment" />
+        <action
+            android:id="@+id/action_GarageEntryListFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAccountFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.MyAccountFragment"
+        android:label="fragment_my_account"
+        tools:layout="@layout/fragment_my_account" >
+        <action
+            android:id="@+id/action_myAccountFragment_to_GarageTimerFragment"
             app:destination="@id/GarageTimerFragment" />
     </fragment>
 </navigation>

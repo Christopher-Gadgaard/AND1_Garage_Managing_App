@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app;
+package dk.via.and1.and1_garage_managing_app.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,26 +14,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dk.via.and1.and1_garage_managing_app.R;
+import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
+import dk.via.and1.and1_garage_managing_app.data.garage.GarageEntry;
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageEntryListBinding;
+import dk.via.and1.and1_garage_managing_app.ui.GarageEntryAdapter;
 
 public class GarageEntryListFragment extends Fragment
 {
 
     private FragmentGarageEntryListBinding binding;
-    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentGarageEntryListBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.garageEntryListRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.garageEntryListRecyclerView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -41,7 +44,7 @@ public class GarageEntryListFragment extends Fragment
 
         User user = new User("Christopher","Gadgaard","+45 30 30 53 69","Christopher.Holmelund@gmail.com","CH 16 768",true);
         Date date = new Date(2022,11,14,0,56);
-        GarageEntry garageEntry = new GarageEntry(user,date,GarageAction.OPEN_GATE);
+        GarageEntry garageEntry = new GarageEntry(user,date, GarageAction.OPEN_GATE);
 
         for (int i = 0; i < 30; i++)
         {
@@ -50,7 +53,6 @@ public class GarageEntryListFragment extends Fragment
 
         GarageEntryAdapter adapter = new GarageEntryAdapter(garageEntries);
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override

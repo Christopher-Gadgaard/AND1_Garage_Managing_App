@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C8E6C9"
-    tools:context=".MainActivity">
+    tools:context=".ui.fragments.GarageTimerFragment">
 
     <ProgressBar
         android:id="@+id/countDownTimerProgressBar"
@@ -25,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/countDownTime"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/icon_color"
+
         android:textSize="70sp"
         app:layout_constraintBottom_toBottomOf="@+id/countDownTimerProgressBar"
         app:layout_constraintEnd_toEndOf="@+id/countDownTimerProgressBar"
@@ -69,8 +68,6 @@
         app:srcCompat="@drawable/bulb_off" />
 
 
-
-
     <Button
         android:id="@+id/setGpsToGarageButton"
         android:layout_width="wrap_content"
@@ -80,6 +77,7 @@
         android:drawableLeft="@drawable/garage"
         android:drawableTint="@color/icon_color"
         android:gravity="center"
+        android:onClick="signOut"
         android:outlineAmbientShadowColor="@color/black"
         android:text="@string/go_to_garage"
         app:layout_constraintEnd_toEndOf="parent"

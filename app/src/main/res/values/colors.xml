@@ -10,4 +10,5 @@
 
     <color name="icon_color">#1B5E20</color>
     <color name="button_color">#DDD</color>
+    <color name="background_color">#C8E6C9</color>
 </resources>

@@ -47,6 +47,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailTextview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebEmailAddress"
@@ -54,7 +55,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordPlateInputLayout"
+                android:id="@+id/passwordInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_password_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -77,25 +79,37 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/signInButton"
+                android:id="@+id/loginButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:onClick="signInClick"
-                android:text="SIGN IN" />
+                android:text="Login" />
 
-            <Button
-                android:id="@+id/signOutButton"
+            <TextView
+                android:id="@+id/RegisterTextLink"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="signUpClick"
+                android:text="Register"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/recoverPasswordTextLink"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="50dp"
-                android:onClick="signUpClick"
-                android:text="SIGN UP" />
-
+                android:onClick="recoverPassword"
+                android:text="Recover Password"
+                android:textAlignment="center" />
         </TableLayout>
     </ScrollView>
 

@@ -1,42 +1,54 @@
 package dk.via.and1.and1_garage_managing_app.data.user;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserRepository
 {
-    private final UserLiveData currentUser;
-    private final Application app;
+    private final UserAuthLiveData currentUser;
     private static UserRepository instance;
-    private final FirebaseAuth fAuth;
+    private DatabaseReference myRef;
+    private UserInfoLiveData userInfoLiveData;
 
-    private UserRepository(Application app) {
-        this.app = app;
-        currentUser = new UserLiveData();
-        fAuth = FirebaseAuth.getInstance();
+    private UserRepository() {
+        currentUser = new UserAuthLiveData();
     }
 
-    public static synchronized UserRepository getInstance(Application app) {
+    public static synchronized UserRepository getInstance() {
         if(instance == null)
-            instance = new UserRepository(app);
+        {
+            instance = new UserRepository();
+        }
         return instance;
+    }
+
+    public void init()
+    {
+        String userId = getCurrentUser().getValue().getUid();
+        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("users");
+        userInfoLiveData = new UserInfoLiveData(myRef);
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
         return currentUser;
     }
 
-    public FirebaseAuth getAuth()
-    {
-        return fAuth;
-    }
-
     public void signOut(){
         FirebaseAuth.getInstance().signOut();
+    }
+
+    public void signUp(UserInfo userInfo, String password){ //TODO MAYBE REMOVE THIS ??
+        String userId = instance.getCurrentUser().getValue().getUid();
+       myRef.child("users").child(userId).setValue(userInfo);
+    }
+
+    public UserInfoLiveData getUserInfo()
+    {
+        return userInfoLiveData;
     }
 
 }

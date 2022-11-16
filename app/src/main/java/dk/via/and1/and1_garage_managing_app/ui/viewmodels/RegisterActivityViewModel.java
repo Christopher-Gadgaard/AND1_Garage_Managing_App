@@ -16,10 +16,10 @@ public class RegisterActivityViewModel extends AndroidViewModel
 {
   private final UserRepository userRepository;
 
-    public RegisterActivityViewModel(@NonNull Application application)
+    public RegisterActivityViewModel(@NonNull Application app)
     {
-        super(application);
-        userRepository = UserRepository.getInstance(application);
+        super(app);
+        userRepository = UserRepository.getInstance();
     }
 
     public void init()
@@ -29,11 +29,6 @@ public class RegisterActivityViewModel extends AndroidViewModel
 
     public LiveData<FirebaseUser> getCurrentUser(){
         return userRepository.getCurrentUser();
-    }
-
-    public FirebaseAuth getAuth()
-    {
-       return userRepository.getAuth();
     }
 
 }

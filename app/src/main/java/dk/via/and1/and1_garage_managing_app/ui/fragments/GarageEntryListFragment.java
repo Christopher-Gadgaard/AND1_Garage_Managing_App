@@ -17,7 +17,7 @@ import java.util.List;
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageEntry;
-import dk.via.and1.and1_garage_managing_app.data.user.User;
+import dk.via.and1.and1_garage_managing_app.data.user.UserInfo;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageEntryListBinding;
 import dk.via.and1.and1_garage_managing_app.ui.GarageEntryAdapter;
 
@@ -42,9 +42,9 @@ public class GarageEntryListFragment extends Fragment
 
         List<GarageEntry> garageEntries = new ArrayList<>();
 
-        User user = new User("Christopher","Gadgaard","+45 30 30 53 69","Christopher.Holmelund@gmail.com","CH 16 768",true); //TODO REPLACE THIS
+        UserInfo userInfo = new UserInfo(); //TODO REPLACE THIS
         Date date = new Date(2022,11,14,0,56);
-        GarageEntry garageEntry = new GarageEntry(user,date, GarageAction.OPEN_GATE);
+        GarageEntry garageEntry = new GarageEntry(userInfo, date, GarageAction.OPEN_GATE);
 
         for (int i = 0; i < 30; i++)
         {

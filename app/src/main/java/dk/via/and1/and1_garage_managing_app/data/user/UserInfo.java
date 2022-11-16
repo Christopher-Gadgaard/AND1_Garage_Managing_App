@@ -1,6 +1,6 @@
 package dk.via.and1.and1_garage_managing_app.data.user;
 
-public class User
+public class UserInfo
 {
     private String firstName;
     private String lastName;
@@ -9,14 +9,8 @@ public class User
     private String licensePlate;
     private Boolean isAdmin;
 
-    public User(String firstName, String lastName, String phoneNo, String email, String licensePlate, Boolean isAdmin)
+    public UserInfo()
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNo = phoneNo;
-        this.email = email;
-        this.licensePlate = licensePlate;
-        this.isAdmin = isAdmin;
     }
 
     public String getFirstName()
@@ -69,12 +63,12 @@ public class User
         this.licensePlate = licensePlate;
     }
 
-    public Boolean getAdmin()
+    public Boolean getIsAdmin()
     {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin)
+    public void setIsAdmin(Boolean admin)
     {
         isAdmin = admin;
     }

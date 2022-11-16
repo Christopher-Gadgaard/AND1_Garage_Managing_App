@@ -8,12 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.databinding.ActivityMainBinding;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     private ActivityMainBinding binding;
     private NavController navController;
 
+    FirebaseAuth fAuth;
+
     private MainActivityViewModel viewModel;
 
 
@@ -34,12 +39,17 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-
         checkIfSignedIn();
+        setContentView(binding.getRoot());
         setupNavigation();
+
+        fAuth = FirebaseAuth.getInstance();
+
+     /*   if (fAuth.getCurrentUser() == null)
+        {
+            startActivity(new Intent(this,LoginActivity.class));
+        }*/
     }
 
 
@@ -73,9 +83,9 @@ public class MainActivity extends AppCompatActivity
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
-    public void signIn()
+    public void goToSignInActivity()
     {
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
@@ -83,8 +93,16 @@ public class MainActivity extends AppCompatActivity
     {
         viewModel.getCurrentUser().observe(this, user ->
         {
-            if (user == null)
-                signIn();
+            if (user != null)
+            {
+                Toast.makeText(this, "Welcome"+ user.getUid(), Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                goToSignInActivity();
+            }
         });
+
+
     }
 }

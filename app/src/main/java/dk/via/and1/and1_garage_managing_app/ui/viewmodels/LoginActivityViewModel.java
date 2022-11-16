@@ -2,19 +2,19 @@ package dk.via.and1.and1_garage_managing_app.ui.viewmodels;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 
-
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 
-public class MainActivityViewModel extends AndroidViewModel
+public class LoginActivityViewModel extends AndroidViewModel
 {
-    private final UserRepository userRepository;
+    UserRepository userRepository;
 
-    public MainActivityViewModel(Application app)
+    public LoginActivityViewModel(@NonNull Application app)
     {
         super(app);
         userRepository = UserRepository.getInstance();
@@ -22,16 +22,12 @@ public class MainActivityViewModel extends AndroidViewModel
 
     public void init()
     {
-        String userId = userRepository.getCurrentUser().getValue().getUid();
+        // TODO IMPLEMENT
     }
 
-    public LiveData<FirebaseUser> getCurrentUser()
-    {
+    public LiveData<FirebaseUser> getCurrentUser(){
         return userRepository.getCurrentUser();
     }
 
-    public void signOut()
-    {
-        userRepository.signOut();
-    }
+
 }

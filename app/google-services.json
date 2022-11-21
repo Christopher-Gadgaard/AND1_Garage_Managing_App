@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1030333931963",
+    "firebase_url": "https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "and1-garage-managing-app",
+    "storage_bucket": "and1-garage-managing-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030333931963:android:b4abb4dea20b446aebe49e",
+        "android_client_info": {
+          "package_name": "dk.via.and1.and1_garage_managing_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030333931963-cvjnl2js5psev6q99qtcsu7bkv3hgjvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2gE3G5otYa3toBuv5TTyLkpEcZ6cr9gQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030333931963-cvjnl2js5psev6q99qtcsu7bkv3hgjvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,8 +17,7 @@ public class GarageEntryLiveData extends LiveData<List<GarageEntry>>
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot)
         {
-         //   List<GarageEntry> garageEntry = snapshot.getValue(); //TODO FIGURE OUT HOW TO GET LIST AS LIVEDATA
-          //  setValue(garageEntry);
+
         }
 
         @Override

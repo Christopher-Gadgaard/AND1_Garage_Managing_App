@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.ui.viewmodels.RegisterActivityViewModel;
@@ -105,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
 
        // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
 
-        User user = new User("joe", "doe", "phoneNo", "12345@1.dk", "11111", false);
+        User user = new User("joe", "doe", "phoneNo", "123456@1.dk", "11111", false);
 
         viewModel.registerUser(user,"1234567"); //TODO CHANGE TO PASSWORD
 

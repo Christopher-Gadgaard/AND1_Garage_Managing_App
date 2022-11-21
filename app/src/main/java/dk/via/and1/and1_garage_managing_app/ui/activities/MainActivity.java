@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
        // viewModel.init();
         setContentView(binding.getRoot());
         setupNavigation();
+        System.out.println("!hello");
         checkIfSignedIn();
     }
 

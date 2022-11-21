@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +17,8 @@ import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 public class RegisterActivityViewModel extends AndroidViewModel
 {
   private final UserRepository userRepository;
+
+ MutableLiveData<Boolean> isRegistered;
 
     public RegisterActivityViewModel(@NonNull Application app)
     {
@@ -33,7 +36,19 @@ public class RegisterActivityViewModel extends AndroidViewModel
 
     public void registerUser(User user, String password)
     {
-        userRepository.registerUser(user,password);
+        userRepository.registerUser(user, password, new UserRepository.myCallback() {
+            @Override
+            public void OnError() {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                isRegistered.setValue(true);
+            }
+        });
     }
+
+
 
 }

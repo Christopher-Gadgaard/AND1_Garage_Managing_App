@@ -33,7 +33,7 @@ public class UserRepository {
     public void init()
     {
         fAuth = FirebaseAuth.getInstance();
-        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(getCurrentUser().getValue().getUid());
         userLiveData = new UserLiveData(myRef);
     }
 
@@ -52,16 +52,29 @@ public class UserRepository {
         return fAuth;
     }
 
-    public void registerUser(User user, String password)
+    public void registerUser(User user, String password, myCallback callback)
     {
       fAuth.createUserWithEmailAndPassword(user.getEmail(), password).addOnCompleteListener(task -> {
-          myRef.push().setValue(user).isSuccessful();
+          myRef.push().setValue(user).addOnCompleteListener(task1 -> {
+              callback.onSuccess();
+          });
       }); //TODO look here with kasper
     }
+
+
 
     public UserLiveData getUser()
     {
         return userLiveData;
     }
+
+    public interface myCallback
+    {
+        void OnError();
+        void onSuccess();
+    }
+
+
+
 
 }

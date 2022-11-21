@@ -1,6 +1,8 @@
 package dk.via.and1.and1_garage_managing_app.data.user;
 
-public class UserInfo
+import java.util.ArrayList;
+
+public class User
 {
     private String firstName;
     private String lastName;
@@ -8,9 +10,33 @@ public class UserInfo
     private String email;
     private String licensePlate;
     private Boolean isAdmin;
+    private ArrayList<String> garageEntryIds;
 
-    public UserInfo()
+    public User()
     {
+    }
+
+    public User(String firstName, String lastName, String phoneNo, String email,
+                String licensePlate, Boolean isAdmin)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNo = phoneNo;
+        this.email = email;
+        this.licensePlate = licensePlate;
+        this.isAdmin = isAdmin;
+        this.garageEntryIds = new ArrayList<>();
+    }
+
+    public User(String firstName, String lastName, String phoneNo, String email, String licensePlate, Boolean isAdmin, ArrayList<String> garageEntryIds)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNo = phoneNo;
+        this.email = email;
+        this.licensePlate = licensePlate;
+        this.isAdmin = isAdmin;
+        this.garageEntryIds = garageEntryIds;
     }
 
     public String getFirstName()
@@ -71,5 +97,15 @@ public class UserInfo
     public void setIsAdmin(Boolean admin)
     {
         isAdmin = admin;
+    }
+
+    public ArrayList<String> getGarageEntryIds()
+    {
+        return garageEntryIds;
+    }
+
+    public void setGarageEntryIds(ArrayList<String> garageEntryIds)
+    {
+        this.garageEntryIds = garageEntryIds;
     }
 }

@@ -5,9 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
-import dk.via.and1.and1_garage_managing_app.data.user.UserInfo;
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 
 public class MyAccountViewModel extends AndroidViewModel
@@ -22,12 +21,11 @@ public class MyAccountViewModel extends AndroidViewModel
 
     public void init()
     {
-        //TODO do or remove
+        userRepository.init();
     }
 
-    public LiveData<UserInfo> getUserInfo()
+    public LiveData<User> getUser()
     {
-        userRepository.init();
-        return userRepository.getUserInfo();
+        return userRepository.getUser();
     }
 }

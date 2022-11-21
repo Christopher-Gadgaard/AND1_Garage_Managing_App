@@ -4,7 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.RegisterActivity">
+    tools:context=".ui.activities.RegisterActivity"
+    android:id="@+id/constraintLayout">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -46,6 +57,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -70,6 +82,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -93,6 +106,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebEmailAddress"
@@ -116,6 +130,7 @@
                 app:startIconDrawable="@drawable/phone">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -139,13 +154,14 @@
                 app:startIconDrawable="@drawable/ic_baseline_directions_car_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/licensePlateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="7" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordPlateInputLayout"
+                android:id="@+id/passwordInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -161,6 +177,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_password_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -168,7 +185,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordConfirmPlateInputLayout"
+                android:id="@+id/passwordConfirmInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -177,12 +194,13 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/confirm_password"
                 app:endIconMode="password_toggle"
-                app:layout_constraintEnd_toEndOf="@+id/passwordPlateInputLayout"
-                app:layout_constraintStart_toStartOf="@+id/passwordPlateInputLayout"
-                app:layout_constraintTop_toBottomOf="@+id/passwordPlateInputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout"
                 app:startIconDrawable="@drawable/ic_baseline_password_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordConfirmEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
@@ -198,9 +216,9 @@
                 android:layout_marginBottom="50dp"
                 android:onClick="register"
                 android:text="@string/done"
-                app:layout_constraintEnd_toEndOf="@+id/passwordConfirmPlateInputLayout"
-                app:layout_constraintStart_toStartOf="@+id/passwordConfirmPlateInputLayout"
-                app:layout_constraintTop_toBottomOf="@+id/passwordConfirmPlateInputLayout" />
+                app:layout_constraintEnd_toEndOf="@+id/passwordConfirmInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/passwordConfirmInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/passwordConfirmInputLayout" />
         </TableLayout>
     </ScrollView>
 

@@ -2,29 +2,29 @@ package dk.via.and1.and1_garage_managing_app.data.garage;
 
 import java.util.Date;
 
-import dk.via.and1.and1_garage_managing_app.data.user.UserInfo;
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 
 public class GarageEntry
 {
-    private UserInfo userInfo;
+    private User user;
     private Date date;
     private GarageAction action;
 
-    public GarageEntry(UserInfo userInfo, Date date, GarageAction action)
+    public GarageEntry(User user, Date date, GarageAction action)
     {
-        this.userInfo = userInfo;
+        this.user = user;
         this.date = date;
         this.action = action;
     }
 
-    public UserInfo getUser()
+    public User getUser()
     {
-        return userInfo;
+        return user;
     }
 
-    public void setUser(UserInfo userInfo)
+    public void setUser(User user)
     {
-        this.userInfo = userInfo;
+        this.user = user;
     }
 
     public Date getDate()

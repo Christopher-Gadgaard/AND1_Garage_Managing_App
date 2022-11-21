@@ -1,30 +1,29 @@
 package dk.via.and1.and1_garage_managing_app.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import dk.via.and1.and1_garage_managing_app.R;
-import dk.via.and1.and1_garage_managing_app.data.user.UserInfo;
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.ui.viewmodels.RegisterActivityViewModel;
 
-public class RegisterActivity extends AppCompatActivity
-{
+public class RegisterActivity extends AppCompatActivity {
     RegisterActivityViewModel viewModel;
-    TextInputLayout firstName, lastName, email, phoneNo, licensePlate, password, confirmPassword;
-    FirebaseAuth fAuth;
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
+    EditText editTextFirstName, editTextLastName, editTextEmail, editTextPhoneNo, editTextLicensePlate, editTextPassword, editTextConfirmPassword;
+    ProgressBar progressBar;
+    ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,95 +34,115 @@ public class RegisterActivity extends AppCompatActivity
         viewModel.init();
 
         setContentView(R.layout.activity_register);
-
-        firstName = findViewById(R.id.firstNameInputLayout);
-        lastName = findViewById(R.id.lastNameInputLayout);
-        email = findViewById(R.id.emailInputLayout);
-        phoneNo = findViewById(R.id.phoneInputLayout);
-        licensePlate = findViewById(R.id.licensePlateInputLayout);
-        password = findViewById(R.id.passwordPlateInputLayout);
-        confirmPassword = findViewById(R.id.passwordConfirmPlateInputLayout);
-
-        fAuth = FirebaseAuth.getInstance();
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        editTextFirstName = findViewById(R.id.firstNameEditText);
+        editTextLastName = findViewById(R.id.lastNameEditText);
+        editTextEmail = findViewById(R.id.emailEditText);
+        editTextPhoneNo = findViewById(R.id.phoneEditText);
+        editTextLicensePlate = findViewById(R.id.licensePlateEditText);
+        editTextPassword = findViewById(R.id.passwordEditText);
+        editTextConfirmPassword = findViewById(R.id.passwordConfirmEditText);
+        progressBar = findViewById(R.id.progressBar);
+        layout = findViewById(R.id.constraintLayout);
     }
 
     public void register(View v)
     {
-        String firstNameTemp = firstName.getEditText().getText().toString().trim(); //TODO SHOULD THESE BE OBJECT REQUIRED NOT NULL, change in other places if so
-        String lastNameTemp = lastName.getEditText().getText().toString().trim();
-        String emailTemp = email.getEditText().getText().toString().trim();
-        String phoneNoTemp = phoneNo.getEditText().getText().toString().trim();
-        String licensePlateTemp = licensePlate.getEditText().getText().toString().trim();
-        String passwordTemp = password.getEditText().getText().toString().trim();
-        String confirmPasswordTemp = confirmPassword.getEditText().getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String phoneNo = editTextPhoneNo.getText().toString().trim();
+        String licensePlate = editTextLicensePlate.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(firstNameTemp)) //TODO SHOULD THIS BE EXTRACTED ?? ASK KASPER
+      /*  if (firstName.isEmpty()) //TODO SHOULD THIS BE EXTRACTED ?? ASK KASPER
         {
-            firstName.setError("Required*");
+            editTextFirstName.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(lastNameTemp))
-        {
-            lastName.setError("Required*");
+        if (lastName.isEmpty()) {
+            editTextLastName.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(emailTemp))
-        {
-            email.setError("Required*");
+        if (email.isEmpty()) {
+            editTextEmail.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(phoneNoTemp))
-        {
-            phoneNo.setError("Required*");
+        if (phoneNo.isEmpty()) {
+            editTextPhoneNo.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(licensePlateTemp))
-        {
-            licensePlate.setError("Required*");
+        if (licensePlate.isEmpty()) {
+            editTextLicensePlate.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(passwordTemp))
-        {
-            password.setError("Required*");
+        if (password.isEmpty()) {
+            editTextPassword.setError("Required*");
+            editTextFirstName.requestFocus();
             return;
         }
-        if(passwordTemp.length()<6)
-        {
-            password.setError("Password length 6-20 characters"); //TODO IMPLEMENT PASSWORD REGEX
+        if (password.length() < 6) {
+            editTextPassword.setError("Password length 6-20 characters"); //TODO IMPLEMENT PASSWORD REGEX
+            editTextFirstName.requestFocus();
             return;
         }
-        if (!passwordTemp.equals(confirmPasswordTemp))
-        {
-            confirmPassword.setError("Passwords Must Match");
+        if (!password.equals(confirmPassword)) {
+            editTextConfirmPassword.setError("Passwords Must Match");
+            editTextFirstName.requestFocus();
             return;
-        }
+        }*/
 
+        progressBar.setVisibility(View.VISIBLE);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(),0);
+
+
+       // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
+
+        User user = new User("joe", "doe", "phoneNo", "12345@1.dk", "11111", false);
+
+        viewModel.registerUser(user,"1234567"); //TODO CHANGE TO PASSWORD
+
+        if (viewModel.getCurrentUser() != null)
+        {
+            Toast.makeText(this, "Register was successful", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else {
+            Toast.makeText(this, "Register was unsuccessful", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+        }
 
         //Register the user in firebase
-        fAuth.createUserWithEmailAndPassword(emailTemp,passwordTemp).addOnCompleteListener(task ->
-        {
-            if (task.isSuccessful())
-            {
-                Toast.makeText(this, "REGISTERED", Toast.LENGTH_SHORT).show();
+    /*    fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> { //TODO ASK KASPER SHOULD THIS BE IN THE userRepo
+            if (task.isSuccessful()) {
+                User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
 
-              //  startActivity(new Intent(getApplicationContext(), MainActivity.class));//TODO ASK KASPER ABOUT THIS, is this the right way to start.
-               // finish();
+                FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(task1 -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Register was successful", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        Toast.makeText(this, "Registering of userinfo was unsuccessful", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Register of account was unsuccessful", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
-            else
-                Toast.makeText(this, "COULD NOT REGISTER", Toast.LENGTH_SHORT).show();
             return;
-        });
+        });*/
 
-        UserInfo userInfo = new UserInfo(); //TODO FIX THIS
-        userInfo.setFirstName("TEST");
 
-        myRef.child("users").child(viewModel.getCurrentUser().getValue().getUid()).setValue(userInfo);
     }
-
-
 
 
 }

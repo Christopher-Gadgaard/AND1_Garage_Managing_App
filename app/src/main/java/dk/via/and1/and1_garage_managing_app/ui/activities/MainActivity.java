@@ -16,20 +16,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.databinding.ActivityMainBinding;
 import dk.via.and1.and1_garage_managing_app.ui.viewmodels.MainActivityViewModel;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private NavController navController;
-
-    FirebaseAuth fAuth;
 
     private MainActivityViewModel viewModel;
 
@@ -40,16 +36,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        checkIfSignedIn();
+       // viewModel.init();
         setContentView(binding.getRoot());
         setupNavigation();
-
-        fAuth = FirebaseAuth.getInstance();
-
-     /*   if (fAuth.getCurrentUser() == null)
-        {
-            startActivity(new Intent(this,LoginActivity.class));
-        }*/
+        checkIfSignedIn();
     }
 
 
@@ -83,23 +73,19 @@ public class MainActivity extends AppCompatActivity
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
-    public void goToSignInActivity()
+    public void goToLoginActivity()
     {
         startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 
     private void checkIfSignedIn()
     {
         viewModel.getCurrentUser().observe(this, user ->
         {
-            if (user != null)
-            {
-                Toast.makeText(this, "Welcome"+ user.getUid(), Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                goToSignInActivity();
+            if (user != null) {
+                Toast.makeText(this, "Welcome" + user.getEmail(), Toast.LENGTH_SHORT).show();
+            } else {
+                goToLoginActivity();
             }
         });
 

@@ -9,19 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.sql.SQLOutput;
-
-import dk.via.and1.and1_garage_managing_app.data.user.UserInfo;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentMyAccountBinding;
 import dk.via.and1.and1_garage_managing_app.ui.viewmodels.MyAccountViewModel;
 
@@ -38,15 +26,14 @@ public class MyAccountFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MyAccountViewModel.class);
         viewModel.init();
 
-       viewModel.getUserInfo().observe(getViewLifecycleOwner(),userInfo -> {
-            if (userInfo != null)
+       viewModel.getUser().observe(getViewLifecycleOwner(),user -> {
+            if (user != null)
             {
-                System.out.println(userInfo.getFirstName());
-                binding.firstNameEditText.setText(userInfo.getFirstName());
-                binding.lastNameEditText.setText(userInfo.getLastName());
-                binding.emailEditText.setText(userInfo.getEmail());
-                binding.phoneEditText.setText(userInfo.getPhoneNo());
-                binding.licensePlateEditText.setText(userInfo.getLicensePlate());
+                binding.firstNameEditText.setText(user.getFirstName());
+                binding.lastNameEditText.setText(user.getLastName());
+                binding.emailEditText.setText(user.getEmail());
+                binding.phoneEditText.setText(user.getPhoneNo());
+                binding.licensePlateEditText.setText(user.getLicensePlate());
             }
         });
         return binding.getRoot();

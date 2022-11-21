@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class UserInfoLiveData extends LiveData<UserInfo>
+public class UserLiveData extends LiveData<User>
 {
     DatabaseReference databaseReference;
 
@@ -21,8 +21,8 @@ public class UserInfoLiveData extends LiveData<UserInfo>
             //TODO ASK ABOUT THIS
             for (DataSnapshot ds : snapshot.getChildren())
             {
-                UserInfo userInfo = ds.getValue(UserInfo.class);
-                setValue(userInfo);
+                User user = ds.getValue(User.class);
+                setValue(user);
             }
         }
 
@@ -34,7 +34,7 @@ public class UserInfoLiveData extends LiveData<UserInfo>
     };
 
 
-    public UserInfoLiveData(DatabaseReference myRef)
+    public UserLiveData(DatabaseReference myRef)
     {
         databaseReference = myRef;
     }

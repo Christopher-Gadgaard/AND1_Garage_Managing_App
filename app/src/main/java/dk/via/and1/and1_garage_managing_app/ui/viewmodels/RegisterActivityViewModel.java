@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 
 public class RegisterActivityViewModel extends AndroidViewModel
@@ -24,11 +25,15 @@ public class RegisterActivityViewModel extends AndroidViewModel
 
     public void init()
     {
-        // TODO IMPLEMENT
+        userRepository.init();
     }
-
     public LiveData<FirebaseUser> getCurrentUser(){
         return userRepository.getCurrentUser();
+    }
+
+    public void registerUser(User user, String password)
+    {
+        userRepository.registerUser(user,password);
     }
 
 }

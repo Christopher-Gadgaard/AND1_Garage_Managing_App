@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app.ui.activities;
+package dk.via.and1.and1_garage_managing_app.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.databinding.ActivityMainBinding;
-import dk.via.and1.and1_garage_managing_app.ui.viewmodels.MainActivityViewModel;
+import dk.via.and1.and1_garage_managing_app.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-       // viewModel.init();
+        checkIfSignedIn();
         setContentView(binding.getRoot());
         setupNavigation();
-        System.out.println("!hello");
-        checkIfSignedIn();
     }
 
 
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkIfSignedIn()
     {
-        viewModel.getCurrentUser().observe(this, user ->
+        viewModel.getCurrentFirebaseUser().observe(this, user ->
         {
             if (user != null) {
                 Toast.makeText(this, "Welcome" + user.getEmail(), Toast.LENGTH_SHORT).show();
@@ -89,7 +87,5 @@ public class MainActivity extends AppCompatActivity {
                 goToLoginActivity();
             }
         });
-
-
     }
 }

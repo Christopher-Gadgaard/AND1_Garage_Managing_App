@@ -8,15 +8,15 @@
 
 
     <corners
-        android:radius="25dp">
+        android:radius="16dp">
 
 
     </corners>
         <solid
-            android:color="#C8E6C9">
+            android:color="#E8F5E9">
 </solid>
         <stroke android:width="2dp"
-            android:color="@color/button_color">
+            android:color="#2E7D32">
 
         </stroke>
     </shape>

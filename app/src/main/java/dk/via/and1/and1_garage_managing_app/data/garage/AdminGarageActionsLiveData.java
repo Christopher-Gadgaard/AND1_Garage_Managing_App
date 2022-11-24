@@ -6,18 +6,32 @@ import androidx.lifecycle.LiveData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GarageEntryLiveData extends LiveData<List<GarageEntry>>
-{
-    private final ValueEventListener listener = new ValueEventListener()
+public class AdminGarageActionsLiveData extends LiveData<List<GarageAction>> {
+
+    DatabaseReference databaseReference;
+
+    public AdminGarageActionsLiveData(DatabaseReference databaseReference)
     {
+        this.databaseReference = databaseReference;
+    }
+
+    private final ValueEventListener listener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot)
         {
-
+            List<GarageAction> garageActions = new ArrayList<>();
+            snapshot.getChildren().forEach(dataSnapshot -> {
+                dataSnapshot.getChildren().forEach(dataSnapshot1 -> {
+                    garageActions.add(dataSnapshot1.getValue(GarageAction.class));
+                });
+            });
+            setValue(garageActions);
         }
 
         @Override
@@ -26,13 +40,6 @@ public class GarageEntryLiveData extends LiveData<List<GarageEntry>>
 
         }
     };
-
-    DatabaseReference databaseReference;
-
-    public GarageEntryLiveData(DatabaseReference ref)
-    {
-        databaseReference = ref;
-    }
 
     @Override
     protected void onActive()

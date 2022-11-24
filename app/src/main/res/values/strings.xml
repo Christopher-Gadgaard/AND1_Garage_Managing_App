@@ -9,13 +9,15 @@
     <string name="myName">Christopher Holmelund Gadgaard</string>
     <string name="email">Email</string>
     <string name="license_plate_no">License Plate No</string>
-    <string name="time">22:00 AM</string>
+    <string name="dateTime">22:00 AM - 23/11/2022</string>
     <string name="phoneNo">Phone Number</string>
     <string name="action_icon">action icon</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="garage_timer_fragment_label">Garage Timer Fragment</string>
-    <string name="garage_entry_list_fragment_label">Second Fragment</string>
+    <string name="garage_timer_fragment_label">Garage</string>
+    <string name="garage_action_user_fragment_label">My History</string>
+    <string name="garage_action_admin_fragment_label">Garage History</string>
+    <string name="fragment_my_account_label">My Account</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -26,4 +28,5 @@
     <string name="garage_logo">Garage Logo</string>
     <string name="update">Update</string>
     <string name="done">done</string>
+    <string name="back">Back</string>
 </resources>

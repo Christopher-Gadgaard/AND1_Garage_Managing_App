@@ -1,37 +1,42 @@
-package dk.via.and1.and1_garage_managing_app.data.user;
+package dk.via.and1.and1_garage_managing_app.data.garage;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class UserLiveData extends LiveData<User>
-{
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class UserGarageActionsLiveData extends LiveData<List<GarageAction>> {
     DatabaseReference databaseReference;
 
-    public UserLiveData(DatabaseReference myRef)
+    public UserGarageActionsLiveData(DatabaseReference databaseReference)
     {
-        databaseReference = myRef;
+        this.databaseReference = databaseReference;
     }
 
-    private final ValueEventListener listener = new ValueEventListener()
-    {
-
+    private final ValueEventListener listener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot)
-        {
-        User user = snapshot.getValue(User.class);
-            System.out.println(user.getFirstName());
-        setValue(user);
+        {   List<GarageAction> garageActions = new ArrayList<>();
+            snapshot.getChildren().forEach(dataSnapshot -> {
+                garageActions.add(dataSnapshot.getValue(GarageAction.class));
+            });
+             setValue(garageActions);
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error)
         {
-          //TODO
+
         }
     };
 
@@ -47,6 +52,5 @@ public class UserLiveData extends LiveData<User>
     {
         super.onInactive();
         databaseReference.removeEventListener(listener);
-
     }
 }

@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app.ui.viewmodels;
+package dk.via.and1.and1_garage_managing_app.ui.main;
 
 import android.app.Application;
 
@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.google.firebase.auth.FirebaseUser;
 
 
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 
 public class MainActivityViewModel extends AndroidViewModel
@@ -20,17 +21,18 @@ public class MainActivityViewModel extends AndroidViewModel
         userRepository = UserRepository.getInstance();
     }
 
-    public void init()
+    public LiveData<FirebaseUser> getCurrentFirebaseUser()
     {
+      return userRepository.getCurrentFirebaseUser();
     }
 
-    public LiveData<FirebaseUser> getCurrentUser()
+    public LiveData<User> getUser()
     {
-        return userRepository.getCurrentUser();
+        return userRepository.getUser();
     }
 
-    public void signOut()
+    public void logout()
     {
-        userRepository.signOut();
+        userRepository.logout();
     }
 }

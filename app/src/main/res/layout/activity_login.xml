@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -28,7 +28,8 @@
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/garage" />
+            app:srcCompat="@drawable/garage"
+              />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailInputLayout"
@@ -40,6 +41,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/email"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/lastNameInputLayout"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/lastNameInputLayout"
@@ -51,7 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebEmailAddress"
-                    android:maxLength="25" />
+                    android:maxLength="25"
+                    android:textColorHint="#616161" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -64,6 +68,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/password"
                 app:endIconMode="password_toggle"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/licensePlateInputLayout"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/licensePlateInputLayout"
@@ -75,7 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:maxLength="20" />
+                    android:maxLength="20"
+                    android:textColorHint="#616161" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -85,31 +92,37 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:onClick="signInClick"
+                android:onClick="loginClick"
+                android:background="@drawable/round_button"
                 android:text="Login" />
 
             <TextView
                 android:id="@+id/RegisterTextLink"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:onClick="signUpClick"
+                android:gravity="bottom|center"
+                android:minHeight="48dp"
+                android:onClick="registerClick"
                 android:text="Register"
-                android:textAlignment="center" />
+                android:textColor="#616161" />
 
             <TextView
                 android:id="@+id/recoverPasswordTextLink"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="50dp"
-                android:onClick="recoverPassword"
+                android:gravity="top|center"
+                android:minHeight="48dp"
+                android:onClick="recoverPasswordClick"
+
                 android:text="Recover Password"
-                android:textAlignment="center" />
+                android:textColor="#616161" />
         </TableLayout>
     </ScrollView>
 

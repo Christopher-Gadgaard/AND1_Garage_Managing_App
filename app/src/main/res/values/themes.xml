@@ -7,17 +7,23 @@
         <item name="colorOnPrimary">#1B5E20</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#E8F5E9</item>
-        <item name="colorSecondaryVariant">#FBC02D</item>
+        <item name="colorSecondaryVariant">#00B8D4</item>
         <item name="colorOnSecondary">#1B5E20</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#C8E6C9</item>
 
         <item name="android:windowBackground">#C8E6C9</item>
+
+        <item name="actionOverflowButtonStyle">@style/IconOverFlow</item>
     </style>
 
     <style name="Theme.AND1_Garage_Managing_App.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="IconOverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/icon_color</item>
     </style>
 
     <style name="Theme.AND1_Garage_Managing_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

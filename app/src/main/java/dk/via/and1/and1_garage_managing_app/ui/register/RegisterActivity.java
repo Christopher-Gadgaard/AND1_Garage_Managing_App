@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app.ui.activities;
+package dk.via.and1.and1_garage_managing_app.ui.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.user.User;
-import dk.via.and1.and1_garage_managing_app.ui.viewmodels.RegisterActivityViewModel;
+import dk.via.and1.and1_garage_managing_app.ui.main.MainActivity;
+import dk.via.and1.and1_garage_managing_app.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
     RegisterActivityViewModel viewModel;
@@ -29,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         viewModel = new ViewModelProvider(this).get(RegisterActivityViewModel.class);
-        viewModel.init();
 
         setContentView(R.layout.activity_register);
         editTextFirstName = findViewById(R.id.firstNameEditText);
@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         layout = findViewById(R.id.constraintLayout);
     }
 
-    public void register(View v)
+    public void registerUserClick(View v)
     {
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-      /*  if (firstName.isEmpty()) //TODO SHOULD THIS BE EXTRACTED ?? ASK KASPER
+      /*  if (firstName.isEmpty()) //TODO UNCOMMENT THIS
         {
             editTextFirstName.setError("Required*");
             editTextFirstName.requestFocus();
@@ -98,49 +98,28 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(layout.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
+        // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
+        User user = new User("Christopher", "Gadgaard", "30305369", "Chg123@gmail.com", "ch16786", false);
+        viewModel.registerUser(user, "1234567"); //TODO CHANGE TO REAl PASSWORD
 
-       // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
+        viewModel.getRegisterResult().observe(this, result -> {
+            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+        });
 
-        User user = new User("joe", "doe", "phoneNo", "123456@1.dk", "11111", false);
-
-        viewModel.registerUser(user,"1234567"); //TODO CHANGE TO PASSWORD
-
-        if (viewModel.getCurrentUser() != null)
-        {
-            Toast.makeText(this, "Register was successful", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        } else {
-            Toast.makeText(this, "Register was unsuccessful", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-        }
-
-        //Register the user in firebase
-    /*    fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> { //TODO ASK KASPER SHOULD THIS BE IN THE userRepo
-            if (task.isSuccessful()) {
-                User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
-
-                FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(task1 -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Register was successful", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                    } else {
-                        Toast.makeText(this, "Registering of userinfo was unsuccessful", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            } else {
-                Toast.makeText(this, "Register of account was unsuccessful", Toast.LENGTH_SHORT).show();
+        viewModel.getCurrentFirebaseUser().observe(this, auth -> {
+            if (auth != null) {
                 progressBar.setVisibility(View.GONE);
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
             }
-            return;
-        });*/
-
-
+        });
     }
 
-
+    public void backClick(View view)
+    {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
 }

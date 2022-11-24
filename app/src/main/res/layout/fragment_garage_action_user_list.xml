@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.GarageEntryListFragment">
+    tools:context=".ui.garage.action.fragments.lists.UserGarageActionsListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/garageEntryListRecyclerView"
+        android:id="@+id/userGarageActionListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

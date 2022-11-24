@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app.ui.fragments;
+package dk.via.and1.and1_garage_managing_app.ui.my.account;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentMyAccountBinding;
-import dk.via.and1.and1_garage_managing_app.ui.viewmodels.MyAccountViewModel;
 
 public class MyAccountFragment extends Fragment {
 

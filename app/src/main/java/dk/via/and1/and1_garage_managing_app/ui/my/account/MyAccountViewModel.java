@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app.ui.viewmodels;
+package dk.via.and1.and1_garage_managing_app.ui.my.account;
 
 import android.app.Application;
 
@@ -21,7 +21,8 @@ public class MyAccountViewModel extends AndroidViewModel
 
     public void init()
     {
-        userRepository.init();
+        String userId = userRepository.getCurrentFirebaseUser().getValue().getUid();
+        userRepository.init(userId);
     }
 
     public LiveData<User> getUser()

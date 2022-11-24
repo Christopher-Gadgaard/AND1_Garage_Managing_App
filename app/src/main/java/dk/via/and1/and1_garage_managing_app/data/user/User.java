@@ -10,7 +10,7 @@ public class User
     private String email;
     private String licensePlate;
     private Boolean isAdmin;
-    private ArrayList<String> garageEntryIds;
+
 
     public User()
     {
@@ -25,19 +25,8 @@ public class User
         this.email = email;
         this.licensePlate = licensePlate;
         this.isAdmin = isAdmin;
-        this.garageEntryIds = new ArrayList<>();
     }
 
-    public User(String firstName, String lastName, String phoneNo, String email, String licensePlate, Boolean isAdmin, ArrayList<String> garageEntryIds)
-    {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNo = phoneNo;
-        this.email = email;
-        this.licensePlate = licensePlate;
-        this.isAdmin = isAdmin;
-        this.garageEntryIds = garageEntryIds;
-    }
 
     public String getFirstName()
     {
@@ -97,15 +86,5 @@ public class User
     public void setIsAdmin(Boolean admin)
     {
         isAdmin = admin;
-    }
-
-    public ArrayList<String> getGarageEntryIds()
-    {
-        return garageEntryIds;
-    }
-
-    public void setGarageEntryIds(ArrayList<String> garageEntryIds)
-    {
-        this.garageEntryIds = garageEntryIds;
     }
 }

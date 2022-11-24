@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.MyAccountFragment">
+    tools:context=".ui.my.account.MyAccountFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +28,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/first_name"
+                app:boxStrokeColor="@color/text_color"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +54,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/last_name"
                 app:endIconMode="clear_text"
-                app:hintTextColor="@color/icon_color"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/firstNameInputLayout"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/firstNameInputLayout"
@@ -64,7 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:maxLength="25" />
+                    android:maxLength="25"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,6 +81,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/email"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/lastNameInputLayout"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/lastNameInputLayout"
@@ -88,7 +94,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebEmailAddress"
-                    android:maxLength="25" />
+                    android:maxLength="25"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,6 +108,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/phoneNo"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/emailInputLayout"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/emailInputLayout"
@@ -112,7 +121,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:maxLength="8" />
+                    android:maxLength="8"
+                    android:textColorHint="#616161" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,6 +135,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/license_plate_no"
                 app:endIconMode="clear_text"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/phoneInputLayout"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/phoneInputLayout"
@@ -135,7 +147,8 @@
                     android:id="@+id/licensePlateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="7" />
+                    android:maxLength="7"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -148,6 +161,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/password"
                 app:endIconMode="password_toggle"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/licensePlateInputLayout"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/licensePlateInputLayout"
@@ -159,7 +174,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:maxLength="20" />
+                    android:maxLength="20"
+                   android:outlineSpotShadowColor="@color/text_color"
+                    android:backgroundTint="@color/text_color"
+                  />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -172,6 +190,8 @@
                 android:layout_marginEnd="16dp"
                 android:hint="@string/confirm_password"
                 app:endIconMode="password_toggle"
+                app:hintTextColor="@color/text_color"
+                app:boxStrokeColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
                 app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
                 app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout"
@@ -193,6 +213,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="50dp"
                 android:text="@string/update"
+                android:background="@drawable/round_button"
                 app:layout_constraintEnd_toEndOf="@+id/passwordConfirmInputLayout"
                 app:layout_constraintStart_toStartOf="@+id/passwordConfirmInputLayout"
                 app:layout_constraintTop_toBottomOf="@+id/passwordConfirmInputLayout" />

@@ -3,39 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/GarageTimerFragment">
+    app:startDestination="@id/garageTimerFragment">
 
     <fragment
-        android:id="@+id/GarageTimerFragment"
-        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.GarageTimerFragment"
+        android:id="@+id/garageTimerFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.garage.timer.GarageTimerFragment"
         android:label="@string/garage_timer_fragment_label"
         tools:layout="@layout/fragment_garage_timer">
         <action
             android:id="@+id/action_GarageTimerFragment_to_GarageEntryListFragment"
-            app:destination="@id/garageEntryListFragment" />
+            app:destination="@id/garageActionUserFragment" />
         <action
             android:id="@+id/action_GarageTimerFragment_to_myAccountFragment"
             app:destination="@id/myAccountFragment" />
+        <action
+            android:id="@+id/action_GarageTimerFragment_to_garageEntryListFragment"
+            app:destination="@id/garageActionUserFragment" />
+        <action
+            android:id="@+id/action_GarageTimerFragment_to_garageActionAdminFragment"
+            app:destination="@id/garageActionAdminFragment" />
     </fragment>
     <fragment
-        android:id="@+id/garageEntryListFragment"
-        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.GarageEntryListFragment"
-        android:label="@string/garage_entry_list_fragment_label"
-        tools:layout="@layout/fragment_garage_entry">
+        android:id="@+id/garageActionUserFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.garage.action.fragments.lists.UserGarageActionsListFragment"
+        android:label="@string/garage_action_user_fragment_label"
+        tools:layout="@layout/fragment_garage_action_user_list">
         <action
-            android:id="@+id/action_GarageEntryListFragment_to_GarageTimerFragment"
-            app:destination="@id/GarageTimerFragment" />
-        <action
-            android:id="@+id/action_GarageEntryListFragment_to_myAccountFragment"
-            app:destination="@id/myAccountFragment" />
+            android:id="@+id/action_garageActionsListFragment_to_GarageTimerFragment"
+            app:destination="@id/garageTimerFragment" />
     </fragment>
     <fragment
         android:id="@+id/myAccountFragment"
-        android:name="dk.via.and1.and1_garage_managing_app.ui.fragments.MyAccountFragment"
-        android:label="fragment_my_account"
-        tools:layout="@layout/fragment_my_account" >
+        android:name="dk.via.and1.and1_garage_managing_app.ui.my.account.MyAccountFragment"
+        android:label="@string/fragment_my_account_label"
+        tools:layout="@layout/fragment_my_account">
         <action
             android:id="@+id/action_myAccountFragment_to_GarageTimerFragment"
-            app:destination="@id/GarageTimerFragment" />
+            app:destination="@id/garageTimerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/garageActionAdminFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.garage.action.fragments.lists.AdminGarageActionsListFragment"
+        android:label="@string/garage_action_admin_fragment_label">
+        <action
+            android:id="@+id/action_garageActionAdminFragment_to_GarageTimerFragment"
+            app:destination="@id/garageTimerFragment" />
     </fragment>
 </navigation>

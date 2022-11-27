@@ -107,9 +107,9 @@ public class UserRepository {
         });
     }
 
-    public void updateUser(User user, MyCallback callback) //TODO IMPLEMENT THIS
+    public void updateUser(User user, MyCallback callback) //TODO HOW DO I CHECK THE PASSWORD ?
     {
-        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child("");
+        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(currentUser.getValue().getUid());
         myRef.setValue(user).addOnSuccessListener(e -> {
             callback.onSuccess();
         }).addOnFailureListener(e -> {

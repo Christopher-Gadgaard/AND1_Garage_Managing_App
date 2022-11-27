@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="History"
-        android:id="@+id/garageActionUserFragment">
-    </item>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+<!--TODO ASK ABOUT ICONS-->
+
+    <item android:title="Logout"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_logout_24"/>
+
+    <item android:title="My History"
+        android:id="@+id/garageActionUserFragment"
+        android:icon="@drawable/ic_baseline_history_24"
+       />
 
     <item android:title="My Account"
         android:id="@+id/myAccountFragment"
-        >
-    </item>
-    <item android:title="History Admin"
-        android:id="@+id/garageActionAdminFragment">
-    </item>
+        android:icon="@drawable/ic_baseline_manage_accounts_24"
+      />
+
+    <item android:title="Garage History"
+        android:id="@+id/garageActionAdminFragment"
+        android:icon="@drawable/ic_baseline_manage_history_24"
+        />
+
 </menu>

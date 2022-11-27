@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentMyAccountBinding;
 
 public class MyAccountFragment extends Fragment {
@@ -35,6 +36,17 @@ public class MyAccountFragment extends Fragment {
                 binding.licensePlateEditText.setText(user.getLicensePlate());
             }
         });
+
+       binding.updateButton.setOnClickListener(v -> {
+           String firstName = binding.firstNameEditText.getText().toString();
+           String lastName = binding.lastNameEditText.getText().toString();
+           String email = binding.emailEditText.getText().toString();
+           String phoneNo = binding.phoneEditText.getText().toString();
+           String licensePlate = binding.licensePlateEditText.getText().toString();
+
+           User user = new User(firstName, lastName, email, phoneNo, licensePlate, false);
+           viewModel.updateUser(user);
+       });
         return binding.getRoot();
     }
 

@@ -24,7 +24,6 @@ public class UserLiveData extends LiveData<User>
         public void onDataChange(@NonNull DataSnapshot snapshot)
         {
         User user = snapshot.getValue(User.class);
-            System.out.println(user.getFirstName());
         setValue(user);
         }
 

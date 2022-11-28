@@ -17,9 +17,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.databinding.ActivityMainBinding;
 import dk.via.and1.and1_garage_managing_app.ui.login.LoginActivity;
+import dk.via.and1.and1_garage_managing_app.utils.MyCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         checkIfSignedIn();
         setContentView(binding.getRoot());
         setupNavigation();
+
     }
 
 
@@ -88,4 +95,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void getUserById(String id, MyCallback callback)
+    {
+        FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

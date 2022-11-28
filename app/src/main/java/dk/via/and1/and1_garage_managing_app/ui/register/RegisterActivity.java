@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
         // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
-        User user = new User("Christopher", "Gadgaard", "30305369", "Chg123@gmail.com", "ch16786", false);
+        User user = new User("Christopher", "Gadgaard", "30305369", "Chg@gmail.com", "ch16786", false);
         viewModel.registerUser(user, "1234567"); //TODO CHANGE TO REAl PASSWORD
 
         viewModel.getRegisterResult().observe(this, result -> {

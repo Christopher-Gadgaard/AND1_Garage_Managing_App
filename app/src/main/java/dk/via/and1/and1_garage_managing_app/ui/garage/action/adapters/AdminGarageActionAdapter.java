@@ -12,12 +12,15 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
+import dk.via.and1.and1_garage_managing_app.data.garage.GarageActions;
 import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 import dk.via.and1.and1_garage_managing_app.ui.garage.action.fragments.lists.AdminGarageActionsListFragment;
@@ -49,9 +52,10 @@ public class AdminGarageActionAdapter extends RecyclerView.Adapter<AdminGarageAc
     public void onBindViewHolder(@NonNull AdminGarageActionAdapter.ViewHolder holder, int position)
     {
         GarageAction garageAction = garageActions.get(position);
-
-        User user = null;
-
+        FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(garageAction.getUserId()).get().addOnCompleteListener(task -> { //TODO MOVE THIS TO VIEWMODEL/REPOSITORY
+            if (task.isSuccessful())
+            {
+                User user = task.getResult().getValue(User.class);
                 holder.name.setText(user.getFirstName() + " " + user.getLastName());
                 holder.email.setText(user.getEmail());
                 holder.name.setText(user.getFirstName() + " " + user.getLastName());
@@ -60,6 +64,25 @@ public class AdminGarageActionAdapter extends RecyclerView.Adapter<AdminGarageAc
                 Date date = garageAction.getDate();
                 @SuppressLint("SimpleDateFormat") String sDate = new SimpleDateFormat("hh:mm a dd/MM/yyyy").format(date);
                 holder.time.setText(sDate);
+
+                if(garageAction.getGarageActions() == GarageActions.OPEN_GATE)
+                {
+                    holder.action.setImageResource(R.drawable.unlocked);
+                }
+                if(garageAction.getGarageActions() == GarageActions.CLOSE_GATE)
+                {
+                    holder.action.setImageResource(R.drawable.locked);
+                }
+                if(garageAction.getGarageActions() == GarageActions.LIGHTS_OFF)
+                {
+                    holder.action.setImageResource(R.drawable.bulb_off);
+                }
+                if(garageAction.getGarageActions() == GarageActions.LIGHTS_ON)
+                {
+                    holder.action.setImageResource(R.drawable.bulb_on);
+                }
+            }
+        });
     }
 
     @Override

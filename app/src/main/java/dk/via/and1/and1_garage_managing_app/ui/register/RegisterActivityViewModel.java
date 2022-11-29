@@ -15,7 +15,6 @@ import dk.via.and1.and1_garage_managing_app.utils.MyCallback;
 
 public class RegisterActivityViewModel extends AndroidViewModel {
     private final UserRepository userRepository;
-
     MutableLiveData<String> registerResult;
 
     public RegisterActivityViewModel(@NonNull Application app)

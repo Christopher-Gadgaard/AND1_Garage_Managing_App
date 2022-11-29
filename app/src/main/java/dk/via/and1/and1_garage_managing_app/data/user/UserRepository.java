@@ -21,7 +21,6 @@ public class UserRepository {
     private DatabaseReference myRef;
     private UserLiveData currentUserLiveData;
     private FirebaseAuth fAuth;
-    private MutableLiveData<User> getUserMutableLiveData;
 
     private UserRepository()
     {
@@ -41,27 +40,11 @@ public class UserRepository {
         fAuth = FirebaseAuth.getInstance();
         myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         currentUserLiveData = new UserLiveData(myRef.child(userId));
-        getUserMutableLiveData = new MutableLiveData<>();
     }
 
     public LiveData<FirebaseUser> getCurrentFirebaseUser()
     {
         return currentUser;
-    }
-
-    public void getUserById(String id, MyCallback callback)
-    {
-        myRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 
@@ -72,6 +55,7 @@ public class UserRepository {
 
     public void login(String email, String password, MyCallback callback)
     {
+        System.out.println(email + " " + password);
         fAuth = FirebaseAuth.getInstance();
         fAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             callback.onSuccess();
@@ -82,6 +66,7 @@ public class UserRepository {
 
     public void logout()
     {
+        fAuth = FirebaseAuth.getInstance();
         fAuth.signOut();
     }
 
@@ -118,13 +103,38 @@ public class UserRepository {
         });
     }
 
-    public void updateUser(User user, MyCallback callback) //TODO HOW DO I CHECK THE PASSWORD ?
+    public void updateUser(User user, MyCallback callback)
     {
         myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(currentUser.getValue().getUid());
-        myRef.setValue(user).addOnSuccessListener(e -> {
-            callback.onSuccess();
-        }).addOnFailureListener(e -> {
-            callback.OnError(e.getMessage());
+        myRef.setValue(user).addOnCompleteListener(e -> {
+            if (e.isSuccessful()) {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(user.getFirstName() + " " + user.getLastName())
+                        .build();
+                fAuth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(e1 -> {
+                    if (e1.isSuccessful()) {
+                        fAuth.getCurrentUser().updateEmail(user.getEmail()).addOnCompleteListener(e2 -> {
+                            if (e2.isSuccessful()) {
+                                callback.onSuccess();
+                            } else {
+                                callback.OnError(e2.getException().getMessage());
+                            }
+                        });
+                    } else {
+                        callback.OnError(e1.getException().getMessage());
+                    }
+                });
+            } else {
+                callback.OnError(e.getException().getMessage());
+            }
         });
     }
-}
+        public void changePassword (String password, MyCallback callback)
+        {
+            currentUser.getValue().updatePassword(password).addOnSuccessListener(e -> {
+                callback.onSuccess();
+            }).addOnFailureListener(e -> {
+                callback.OnError(e.getMessage());
+            });
+        }
+    }

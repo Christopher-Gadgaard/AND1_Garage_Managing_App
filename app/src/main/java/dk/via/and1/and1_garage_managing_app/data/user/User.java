@@ -1,7 +1,5 @@
 package dk.via.and1.and1_garage_managing_app.data.user;
 
-import java.util.ArrayList;
-
 public class User
 {
     private String firstName;

@@ -4,11 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.View;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.emailTextview);
         password = findViewById(R.id.passwordTextView);
-        viewModel.getResult().observe(this,result-> Toast.makeText(this,result,Toast.LENGTH_LONG).show());
+        viewModel.getResult().observe(this,result-> Toast.makeText(this,result,Toast.LENGTH_SHORT).show());
     }
 
     public void registerClick(View v)
@@ -56,8 +58,11 @@ public class LoginActivity extends AppCompatActivity
             password.requestFocus();
             return;
         }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow( v.getWindowToken(), 0);
 
         viewModel.login(emailTemp,passwordTemp);
+
         viewModel.getCurrentFirebaseUser().observe(this, auth -> {
             if (auth != null) {
                 startActivity(new Intent(this, MainActivity.class));
@@ -66,18 +71,18 @@ public class LoginActivity extends AppCompatActivity
         });
     }
 
-    public void recoverPasswordClick(View view) //TODO MOVE TO REPO AND MAKE ALERTDIALOG MATCH THEME
+    public void recoverPasswordClick(View view) //TODO MAKE ALERTDIALOG MATCH THEME
     {
         final EditText resetEmail = new EditText(view.getContext());
-        final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+        final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext(),R.style.AlertDialog);
         passwordResetDialog.setTitle("Reset Password?");
         passwordResetDialog.setMessage("Enter Your Email, A recovery link will be sent");
         passwordResetDialog.setView(resetEmail);
-        passwordResetDialog.setPositiveButton("Yes", (dialogInterface, i) -> {
+        passwordResetDialog.setPositiveButton("Reset", (dialogInterface, i) -> {
             String email = resetEmail.getText().toString();
          viewModel.recoverPassword(email);
         });
-        passwordResetDialog.setNegativeButton("No", ((dialogInterface, i) -> {
+        passwordResetDialog.setNegativeButton("Cancel", ((dialogInterface, i) -> {
         }));
         passwordResetDialog.create().show();
     }

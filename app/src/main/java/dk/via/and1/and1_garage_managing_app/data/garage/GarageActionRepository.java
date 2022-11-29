@@ -40,7 +40,6 @@ public class GarageActionRepository {
     {
         String actionId = myGarageActionRef.push().getKey();
         myGarageActionRef.child(userId).child(actionId).setValue(garageAction).addOnSuccessListener(e -> {
-            myUserRef.child("garageActionIds").push().setValue(actionId);
             callback.onSuccess();
         }).addOnFailureListener(e -> {
             callback.OnError(e.getMessage());

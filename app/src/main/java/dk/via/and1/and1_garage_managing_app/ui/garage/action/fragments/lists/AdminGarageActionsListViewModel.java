@@ -18,7 +18,6 @@ public class AdminGarageActionsListViewModel extends AndroidViewModel
 {
     private GarageActionRepository garageActionRepository;
     private UserRepository userRepository;
-    private MutableLiveData<User> userMutableLiveData;
 
     public AdminGarageActionsListViewModel(@NonNull Application application)
     {
@@ -38,8 +37,4 @@ public class AdminGarageActionsListViewModel extends AndroidViewModel
         return garageActionRepository.getAdminGarageActions();
     }
 
-   /* public LiveData<User> getGetUserLiveDataById()
-    {
-        return userRepository.getGetUserLiveDataById();
-    }*/
 }

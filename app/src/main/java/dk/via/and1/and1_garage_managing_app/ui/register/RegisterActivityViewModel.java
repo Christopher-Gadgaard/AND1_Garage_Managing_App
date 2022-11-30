@@ -31,7 +31,7 @@ public class RegisterActivityViewModel extends AndroidViewModel {
 
     public LiveData<FirebaseUser> getCurrentFirebaseUser()
     {
-        return userRepository.getCurrentFirebaseUser();
+        return userRepository.getUserAuthLiveData();
     }
 
     public void registerUser(User user, String password)

@@ -52,7 +52,7 @@ public class AdminGarageActionAdapter extends RecyclerView.Adapter<AdminGarageAc
     public void onBindViewHolder(@NonNull AdminGarageActionAdapter.ViewHolder holder, int position)
     {
         GarageAction garageAction = garageActions.get(position);
-        FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(garageAction.getUserId()).get().addOnCompleteListener(task -> { //TODO MOVE THIS TO VIEWMODEL/REPOSITORY
+        FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users").child(garageAction.getUserId()).get().addOnCompleteListener(task -> { //TODO MOVE THIS TO VIEWMODEL/REPOSITORY
             if (task.isSuccessful())
             {
                 User user = task.getResult().getValue(User.class);

@@ -24,13 +24,13 @@ public class MyAccountViewModel extends AndroidViewModel {
 
     public void init()
     {
-        String userId = userRepository.getCurrentFirebaseUser().getValue().getUid();
+        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
         userRepository.init(userId);
     }
 
     public LiveData<User> getUser()
     {
-        return userRepository.getUser();
+        return userRepository.getUserLiveData();
     }
 
     public void updateUser(User user)

@@ -21,14 +21,20 @@ public class MainActivityViewModel extends AndroidViewModel
         userRepository = UserRepository.getInstance();
     }
 
-    public LiveData<FirebaseUser> getCurrentFirebaseUser()
+    public void init()
     {
-      return userRepository.getCurrentFirebaseUser();
+        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
+        userRepository.init(userId);
+    }
+
+    public LiveData<FirebaseUser> getUserAuthLiveData()
+    {
+      return userRepository.getUserAuthLiveData();
     }
 
     public LiveData<User> getUser()
     {
-        return userRepository.getUser();
+        return userRepository.getUserLiveData();
     }
 
     public void logout()

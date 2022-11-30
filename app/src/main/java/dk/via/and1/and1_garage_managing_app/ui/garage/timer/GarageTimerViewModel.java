@@ -9,14 +9,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Date;
+
+import dk.via.and1.and1_garage_managing_app.data.garage.Garage;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
-import dk.via.and1.and1_garage_managing_app.data.garage.GarageActionRepository;
+import dk.via.and1.and1_garage_managing_app.data.garage.GarageRepository;
 import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 import dk.via.and1.and1_garage_managing_app.utils.MyCallback;
 
 public class GarageTimerViewModel extends AndroidViewModel {
     UserRepository userRepository;
-    GarageActionRepository garageActionRepository;
+    GarageRepository garageRepository;
 
     MutableLiveData<String> result;
 
@@ -24,7 +27,8 @@ public class GarageTimerViewModel extends AndroidViewModel {
     {
         super(application);
         userRepository = UserRepository.getInstance();
-        garageActionRepository = GarageActionRepository.getInstance();
+        garageRepository = GarageRepository.getInstance();
+        result = new MutableLiveData<>();
     }
 
     public void init()
@@ -34,9 +38,9 @@ public class GarageTimerViewModel extends AndroidViewModel {
 
     public void garageAction(GarageAction garageAction)
     {
-        String userId = userRepository.getCurrentFirebaseUser().getValue().getUid();
-        garageActionRepository.init(userId);
-        garageActionRepository.garageAction(garageAction, new MyCallback() {
+        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
+        garageRepository.init(userId);
+        garageRepository.garageAction(garageAction, new MyCallback() {
             @Override
             public void OnError(String message)
             {
@@ -53,6 +57,50 @@ public class GarageTimerViewModel extends AndroidViewModel {
 
     public LiveData<FirebaseUser> getCurrentFirebaseUser()
     {
-        return userRepository.getCurrentFirebaseUser();
+        return userRepository.getUserAuthLiveData();
+    }
+
+    public void setGarageGateCloseTime(Date date)
+    {
+        garageRepository.setGarageGateCloseTime(date, new MyCallback() {
+            @Override
+            public void OnError(String message)
+            {
+                result.setValue("Could not connect to garage");
+            }
+
+            @Override
+            public void onSuccess()
+            {
+                result.setValue("Garage gate close time set");//TODO CHANGE THIS
+            }
+        });
+    }
+
+    public void setGarageLightOffTime(Date date)
+    {
+        garageRepository.setGarageLightOffTime(date, new MyCallback() {
+            @Override
+            public void OnError(String message)
+            {
+                result.setValue("Could not connect to garage");
+            }
+
+            @Override
+            public void onSuccess()
+            {
+                result.setValue("Garage light off time set");//TODO CHANGE THIS
+            }
+        });
+    }
+
+    public LiveData<String> getResult()
+    {
+        return result;
+    }
+
+    public LiveData<Garage> getGarageLiveData()
+    {
+        return garageRepository.getGarageLiveData();
     }
 }

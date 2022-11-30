@@ -30,4 +30,9 @@
     <string name="done">done</string>
     <string name="back">Back</string>
     <string name="change_password">Change Password</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="street_number">Street Number</string>
+    <string name="light_timer">Light Timer</string>
+    <string name="gate_timer">Gate Timer</string>
 </resources>

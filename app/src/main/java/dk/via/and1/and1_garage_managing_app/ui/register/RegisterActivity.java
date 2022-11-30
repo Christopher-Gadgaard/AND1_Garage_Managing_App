@@ -101,19 +101,20 @@ public class RegisterActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
         // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
-        User user = new User("Christopher", "Gadgaard", "30305369", "Chg@gmail.com", "ch16786", false);
+        User user = new User("Christopher", "Gadgaard", "30305369", "Chg12345678@gmail.com", "ch16786", false);
         viewModel.registerUser(user, "1234567"); //TODO CHANGE TO REAl PASSWORD
 
         viewModel.getRegisterResult().observe(this, result -> {
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-        });
 
-        viewModel.getCurrentFirebaseUser().observe(this, auth -> {
-            if (auth != null) {
-                progressBar.setVisibility(View.GONE);
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
-            }
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+
+            viewModel.getCurrentFirebaseUser().observe(this, auth -> {
+                if (auth != null) {
+                    progressBar.setVisibility(View.GONE);
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                }
+            });
         });
     }
 

@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_GarageTimerFragment_to_garageActionAdminFragment"
             app:destination="@id/garageActionAdminFragment" />
+        <action
+            android:id="@+id/action_garageTimerFragment_to_garageInfoFragment2"
+            app:destination="@id/garageInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/garageActionUserFragment"
@@ -47,6 +50,15 @@
         android:label="@string/garage_action_admin_fragment_label">
         <action
             android:id="@+id/action_garageActionAdminFragment_to_GarageTimerFragment"
+            app:destination="@id/garageTimerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/garageInfoFragment"
+        android:name="dk.via.and1.and1_garage_managing_app.ui.garage.GarageInfoFragment"
+        android:label="Manage Garage"
+        tools:layout="@layout/fragment_garage_info">
+        <action
+            android:id="@+id/action_garageInfoFragment2_to_garageTimerFragment"
             app:destination="@id/garageTimerFragment" />
     </fragment>
 </navigation>

@@ -43,18 +43,23 @@ public class GarageTimerFragment extends Fragment {
             Date date = new Date();
             String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
             viewModel.garageAction(new GarageAction(userId, date, GarageActions.OPEN_GATE));
+            long time = date.getTime();
+            viewModel.setGarageGateCloseTime(new Date(time+(5*60*1000)));
         });
 
         binding.closeGarageButton.setOnClickListener(v->{
             Date date = new Date();
             String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
             viewModel.garageAction(new GarageAction(userId, date, GarageActions.CLOSE_GATE));
+            viewModel.setGarageGateCloseTime(new Date());
         });
 
         binding.garageLightsButton.setOnClickListener(v->{
             Date date = new Date();
             String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
             viewModel.garageAction(new GarageAction(userId, date, GarageActions.LIGHTS_ON));
+            long time = date.getTime();
+            viewModel.setGarageLightOffTime(new Date(time+(5*60*1000))); //TODO: change to get from livedata
         });
     }
 

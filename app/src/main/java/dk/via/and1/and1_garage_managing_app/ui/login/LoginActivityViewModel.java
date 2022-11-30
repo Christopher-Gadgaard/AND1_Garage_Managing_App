@@ -64,6 +64,6 @@ public class LoginActivityViewModel extends AndroidViewModel {
 
     public LiveData<FirebaseUser> getCurrentFirebaseUser()
     {
-        return userRepository.getCurrentFirebaseUser();
+        return userRepository.getUserAuthLiveData();
     }
 }

@@ -8,20 +8,21 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 import dk.via.and1.and1_garage_managing_app.utils.MyCallback;
 
 public class UserRepository {
-    private final UserAuthLiveData userAuthLiveData;
     private static UserRepository instance;
-    private DatabaseReference myRef;
-    private UserLiveData userLiveData;
-    private FirebaseAuth fAuth;
 
-    private UserRepository()
-    {
-        userAuthLiveData = new UserAuthLiveData();
-        fAuth = FirebaseAuth.getInstance();
-    }
+    private UserAuthLiveData userAuthLiveData;
+    private UserLiveData userLiveData;
+
+    private DatabaseReference myUserRef;
+
+    private FirebaseAuth fAuth;
+    private FirebaseDatabase database;
+
 
     public static synchronized UserRepository getInstance()
     {
@@ -31,17 +32,23 @@ public class UserRepository {
         return instance;
     }
 
-    public void init(String userId)
+    public void initDatabase()
     {
-        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users");
-        userLiveData = new UserLiveData(myRef.child(userId));
+        database = FirebaseDatabase.getInstance();
+        myUserRef = database.getReference("users");
+        userLiveData = new UserLiveData(myUserRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))); //TODO ASK ABOUT THIS
+    }
+
+    public void initAuth()
+    {
+        fAuth = FirebaseAuth.getInstance();
+        userAuthLiveData = new UserAuthLiveData();
     }
 
     public LiveData<FirebaseUser> getUserAuthLiveData()
     {
         return userAuthLiveData;
     }
-
 
     public LiveData<User> getUserLiveData()
     {
@@ -74,9 +81,9 @@ public class UserRepository {
     public void registerUser(User user, String password, MyCallback callback)
     {
         fAuth.createUserWithEmailAndPassword(user.getEmail(), password).addOnSuccessListener(task -> {
+            initDatabase();
             String userId = fAuth.getUid();
-            myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users").child(userId);
-            myRef.setValue(user).addOnSuccessListener(e -> {
+            myUserRef.child(userId).setValue(user).addOnSuccessListener(e -> {
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(user.getFirstName() + " " + user.getLastName())
                         .build();
@@ -95,8 +102,7 @@ public class UserRepository {
 
     public void updateUser(User user, MyCallback callback)
     {
-        myRef = FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users").child(userAuthLiveData.getValue().getUid());
-        myRef.setValue(user).addOnCompleteListener(e -> {
+        myUserRef.setValue(user).addOnCompleteListener(e -> {
             if (e.isSuccessful()) {
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(user.getFirstName() + " " + user.getLastName())
@@ -122,7 +128,7 @@ public class UserRepository {
 
     public void changePassword(String password, MyCallback callback)
     {
-        userAuthLiveData.getValue().updatePassword(password).addOnSuccessListener(e -> {
+        fAuth.getCurrentUser().updatePassword(password).addOnSuccessListener(e -> {
             callback.onSuccess();
         }).addOnFailureListener(e -> {
             callback.OnError(e.getMessage());

@@ -8,6 +8,7 @@ public class GarageAction
     private Date date;
     private GarageActions garageActions;
 
+
     public GarageAction(String userId, Date date, GarageActions garageActions)
     {
         this.userId = userId;

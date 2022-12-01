@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
@@ -29,8 +30,6 @@ import dk.via.and1.and1_garage_managing_app.ui.garage.action.fragments.lists.Adm
 public class AdminGarageActionAdapter extends RecyclerView.Adapter<AdminGarageActionAdapter.ViewHolder>
 {
     List<GarageAction> garageActions;
-    AdminGarageActionsListViewModel viewModel;
-
 
     public AdminGarageActionAdapter(List<GarageAction> garageActions)
     {
@@ -52,15 +51,17 @@ public class AdminGarageActionAdapter extends RecyclerView.Adapter<AdminGarageAc
     public void onBindViewHolder(@NonNull AdminGarageActionAdapter.ViewHolder holder, int position)
     {
         GarageAction garageAction = garageActions.get(position);
-        FirebaseDatabase.getInstance("https://and1-garage-managing-app-default-rtdb.europe-west1.firebasedatabase.app/").getReference("users").child(garageAction.getUserId()).get().addOnCompleteListener(task -> { //TODO MOVE THIS TO VIEWMODEL/REPOSITORY
+        FirebaseDatabase.getInstance().getReference("users").child(garageAction.getUserId()).get().addOnCompleteListener(task -> { //TODO MOVE THIS TO VIEWMODEL/REPOSITORY
             if (task.isSuccessful())
             {
                 User user = task.getResult().getValue(User.class);
-                holder.name.setText(user.getFirstName() + " " + user.getLastName());
-                holder.email.setText(user.getEmail());
-                holder.name.setText(user.getFirstName() + " " + user.getLastName());
-                holder.phoneNo.setText(user.getPhoneNo());
-                holder.licensePlateNo.setText(user.getLicensePlate());
+                if (user != null)
+                {
+                    holder.name.setText(user.getFirstName() + " " + user.getLastName());
+                    holder.email.setText(user.getEmail());
+                    holder.phoneNo.setText(user.getPhoneNo());
+                    holder.licensePlateNo.setText(user.getLicensePlate());
+                }
                 Date date = garageAction.getDate();
                 @SuppressLint("SimpleDateFormat") String sDate = new SimpleDateFormat("hh:mm a dd/MM/yyyy").format(date);
                 holder.time.setText(sDate);

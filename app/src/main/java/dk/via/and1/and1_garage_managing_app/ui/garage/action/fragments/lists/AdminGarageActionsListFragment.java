@@ -41,7 +41,6 @@ public class AdminGarageActionsListFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
         viewModel = new ViewModelProvider(this).get(AdminGarageActionsListViewModel.class);
-        viewModel.init();
 
         viewModel.getAdminGarageActions().observe(getViewLifecycleOwner(), garageActions -> {
             AdminGarageActionAdapter adapter = new AdminGarageActionAdapter(garageActions);

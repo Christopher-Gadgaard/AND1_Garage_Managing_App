@@ -26,6 +26,7 @@ public class UserGarageActionsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentGarageActionUserListBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(UserGarageActionsListViewModel.class);
         return binding.getRoot();
     }
 
@@ -38,12 +39,6 @@ public class UserGarageActionsListFragment extends Fragment {
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
-
-
-        viewModel = new ViewModelProvider(this).get(UserGarageActionsListViewModel.class);
-        viewModel.init();
-
-
 
         viewModel.getUserGarageActions().observe(getViewLifecycleOwner(), garageActions -> {
             UserGarageActionAdapter adapter = new UserGarageActionAdapter(garageActions);

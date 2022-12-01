@@ -19,13 +19,8 @@ public class MyAccountViewModel extends AndroidViewModel {
     {
         super(app);
         userRepository = UserRepository.getInstance();
+        userRepository.initDatabase();
         result = new MutableLiveData<>();
-    }
-
-    public void init()
-    {
-        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
-        userRepository.init(userId);
     }
 
     public LiveData<User> getUser()

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Garage {
     private Date gateCloseTime;
     private Date lightOffTime;
-    private String city, postCode, street, streetNumber;
+    private String city, postCode, street, streetNo;
     private int gateTimer;
     private int lightTimer;
 
@@ -13,14 +13,14 @@ public class Garage {
     {
     }
 
-    public Garage(Date gateCloseTime, Date lightOffTime, String city, String postCode, String street, String streetNumber, int gateTimer, int lightTimer)
+    public Garage(Date gateCloseTime, Date lightOffTime, String city, String postCode, String street, String streetNo, int gateTimer, int lightTimer)
     {
         this.gateCloseTime = gateCloseTime;
         this.lightOffTime = lightOffTime;
         this.city = city;
         this.postCode = postCode;
         this.street = street;
-        this.streetNumber = streetNumber;
+        this.streetNo = streetNo;
         this.gateTimer = gateTimer;
         this.lightTimer = lightTimer;
     }
@@ -75,14 +75,14 @@ public class Garage {
         this.street = street;
     }
 
-    public String getStreetNumber()
+    public String getStreetNo()
     {
-        return streetNumber;
+        return streetNo;
     }
 
-    public void setStreetNumber(String streetNumber)
+    public void setStreetNo(String streetNo)
     {
-        this.streetNumber = streetNumber;
+        this.streetNo = streetNo;
     }
 
     public int getGateTimer()

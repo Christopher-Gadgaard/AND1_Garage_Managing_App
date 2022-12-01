@@ -35,7 +35,7 @@ public class GarageInfoFragment extends Fragment {
                 binding.cityNameEditText.setText(garage.getCity());
                 binding.postCodeEditText.setText(garage.getPostCode());
                 binding.streetEditText.setText(garage.getStreet());
-                binding.streetNumberEditText.setText(garage.getStreetNumber());
+                binding.streetNumberEditText.setText(garage.getStreetNo());
                 binding.lightTimerEditText.setText(String.valueOf(garage.getLightTimer()));
                 binding.gateTimerEditText.setText(String.valueOf(garage.getGateTimer()));
             }
@@ -52,7 +52,7 @@ public class GarageInfoFragment extends Fragment {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-            Garage garage = new Garage(new Date(), new Date(), city, postCode, street, streetNumber, lightTimer, gateTimer);
+            Garage garage = new Garage(new Date(), new Date(), city, postCode, street, streetNumber, gateTimer, lightTimer);
             viewModel.updateGarageInfo(garage);
         });
 

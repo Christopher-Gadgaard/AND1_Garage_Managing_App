@@ -1,6 +1,12 @@
 package dk.via.and1.and1_garage_managing_app.ui.garage.timer;
 
+import static dk.via.and1.and1_garage_managing_app.R.drawable.bulb_off;
+import static dk.via.and1.and1_garage_managing_app.R.drawable.bulb_on;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,62 +18,239 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Date;
+import java.util.Locale;
 
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageActions;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageTimerBinding;
-import dk.via.and1.and1_garage_managing_app.ui.garage.timer.GarageTimerViewModel;
 
 public class GarageTimerFragment extends Fragment {
     private FragmentGarageTimerBinding binding;
     private GarageTimerViewModel viewModel;
-
+    private CountDownTimer gateCountDownTimer, lightCountDownTimer;
+    private long gateTimeLeftInMilliseconds, lightTimeLeftInMilliseconds;
+    private int gateCloseTimer, lightCloseTimer;
+    private Boolean isLightOn;
+    private String city, postCode, street, streetNo;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentGarageTimerBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(GarageTimerViewModel.class);
-        viewModel.init();
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
+       observeGarage();
+
         binding.setGpsToGarageButton.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
+           onSetGpsClick();
         });
 
         binding.openGarageButton.setOnClickListener(v -> {
-            Date date = new Date();
-            String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
-            viewModel.garageAction(new GarageAction(userId, date, GarageActions.OPEN_GATE));
-            long time = date.getTime();
-            viewModel.setGarageGateCloseTime(new Date(time+(5*60*1000)));
+          onOpenGarageClick();
         });
 
-        binding.closeGarageButton.setOnClickListener(v->{
-            Date date = new Date();
-            String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
-            viewModel.garageAction(new GarageAction(userId, date, GarageActions.CLOSE_GATE));
-            viewModel.setGarageGateCloseTime(new Date());
+        binding.closeGarageButton.setOnClickListener(v -> {
+            onCloseGarageClick();
         });
 
-        binding.garageLightsButton.setOnClickListener(v->{
-            Date date = new Date();
-            String userId = viewModel.getCurrentFirebaseUser().getValue().getUid();
-            viewModel.garageAction(new GarageAction(userId, date, GarageActions.LIGHTS_ON));
-            long time = date.getTime();
-            viewModel.setGarageLightOffTime(new Date(time+(5*60*1000))); //TODO: change to get from livedata
+        binding.garageLightsButton.setOnClickListener(v -> {
+           onGarageLightsClick();
         });
+    }
+
+    public void observeGarage()
+    {
+        viewModel.getGarageLiveData().observe(getViewLifecycleOwner(), garage -> {
+            if (garage != null) {
+
+                lightCloseTimer = garage.getLightTimer();
+                gateCloseTimer = garage.getGateTimer();
+                city = garage.getCity();
+                postCode = garage.getPostCode();
+                street = garage.getStreet();
+                streetNo = garage.getStreetNo();
+
+
+                if (garage.getGateCloseTime().after(new Date())) {
+                    gateTimeLeftInMilliseconds = garage.getGateCloseTime().getTime() - new Date().getTime();
+                    binding.gateCountDownTimerTextView.setVisibility(View.VISIBLE);
+                    binding.gateCountDownTimerImageView.setVisibility(View.INVISIBLE);
+                    startGateTimer();
+                } else {
+                    resetGateTimer();
+                    binding.gateCountDownTimerProgressBar.setProgress(100);
+                    binding.gateCountDownTimerTextView.setVisibility(View.INVISIBLE);
+                    binding.gateCountDownTimerImageView.setVisibility(View.VISIBLE);
+                }
+
+
+                if (garage.getLightOffTime().after(new Date())) {
+                    lightTimeLeftInMilliseconds = garage.getLightOffTime().getTime() - new Date().getTime();
+                    binding.lightCountDownTimerTextView.setVisibility(View.VISIBLE);
+                    binding.lightCountDownTimerProgressBar.setVisibility(View.VISIBLE);
+                    binding.garageLightsButton.setImageResource(bulb_on);
+                    isLightOn = true;
+                    startLightTimer();
+                } else {
+                    resetLightTimer();
+                    binding.lightCountDownTimerProgressBar.setVisibility(View.INVISIBLE);
+                    binding.lightCountDownTimerTextView.setVisibility(View.INVISIBLE);
+                    binding.garageLightsButton.setImageResource(bulb_off);
+                    isLightOn = false;
+                }
+            }
+        });
+    }
+
+    public void onSetGpsClick()
+    {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("https://www.google.com/maps/dir/?api=1&destination="+city+"+"+postCode+"+"+street+"+"+streetNo+"&travelmode=driving"));
+        startActivity(intent);
+    }
+
+    public void onOpenGarageClick()
+    {
+        Date date = new Date();
+        String id = FirebaseAuth.getInstance().getUid();
+        viewModel.garageAction(new GarageAction(id, date, GarageActions.OPEN_GATE));
+        long time = date.getTime();
+        viewModel.setGarageGateCloseTime(new Date(time + ((long) gateCloseTimer * 60 * 1000)));
+    }
+
+    public void onCloseGarageClick()
+    {
+        Date date = new Date();
+        String id = FirebaseAuth.getInstance().getUid();
+        viewModel.garageAction(new GarageAction(id, date, GarageActions.CLOSE_GATE));
+        viewModel.setGarageGateCloseTime(new Date());
+    }
+
+    public void onGarageLightsClick()
+    {
+        Date date = new Date();
+        String id = FirebaseAuth.getInstance().getUid(); //TODO ASK ABOUT THIS, every time i get it form the viewmodel i get exceptions
+
+        if (!isLightOn) {
+            viewModel.garageAction(new GarageAction(id, date, GarageActions.LIGHTS_ON));
+            long time = date.getTime();
+            viewModel.setGarageLightOffTime(new Date(time + ((long) lightCloseTimer * 60 * 1000))); //TODO: change to get from livedata
+        } else {
+            viewModel.garageAction(new GarageAction(id, date, GarageActions.LIGHTS_OFF));
+            viewModel.setGarageLightOffTime(new Date());
+        }
+    }
+
+    private void startGateTimer()
+    {
+        if (gateCountDownTimer != null) {
+            gateCountDownTimer.cancel();
+        }
+        gateCountDownTimer = new CountDownTimer(gateTimeLeftInMilliseconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished)
+            {
+                gateTimeLeftInMilliseconds = millisUntilFinished;
+                updateGateCountdownText();
+            }
+
+            @Override
+            public void onFinish()
+            {
+                binding.gateCountDownTimerProgressBar.setProgress(100);
+                binding.gateCountDownTimerTextView.setVisibility(View.INVISIBLE);
+                binding.gateCountDownTimerImageView.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
+
+    private void startLightTimer()
+    {
+        if (lightCountDownTimer != null) {
+            lightCountDownTimer.cancel();
+        }
+        lightCountDownTimer = new CountDownTimer(lightTimeLeftInMilliseconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished)
+            {
+                lightTimeLeftInMilliseconds = millisUntilFinished;
+                updateLightCountdownText();
+            }
+
+            @Override
+            public void onFinish()
+            {
+                binding.lightCountDownTimerProgressBar.setVisibility(View.INVISIBLE);
+                binding.lightCountDownTimerTextView.setVisibility(View.INVISIBLE);
+                binding.garageLightsButton.setImageResource(bulb_off);
+            }
+        }.start();
+    }
+
+    private void resetGateTimer()
+    {
+        if (gateCountDownTimer != null) {
+            gateCountDownTimer.cancel();
+        }
+    }
+
+    private void resetLightTimer()
+    {
+        if (lightCountDownTimer != null) {
+            lightCountDownTimer.cancel();
+        }
+    }
+
+    private void updateGateCountdownText()
+    {
+        if (binding != null) {
+            int minutes = (int) (gateTimeLeftInMilliseconds / 1000) / 60;
+            int seconds = (int) (gateTimeLeftInMilliseconds / 1000) % 60;
+
+            int gateTimer = (gateCloseTimer * 60000);
+
+            int progress = (int) (100 * gateTimeLeftInMilliseconds / gateTimer);
+
+            String timeLeftText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+            binding.gateCountDownTimerProgressBar.setProgress(progress);
+            binding.gateCountDownTimerTextView.setText(timeLeftText);
+        }
+    }
+
+    private void updateLightCountdownText()
+    {
+        if (binding != null) {
+            int minutes = (int) (lightTimeLeftInMilliseconds / 1000) / 60;
+            int seconds = (int) (lightTimeLeftInMilliseconds / 1000) % 60;
+
+            int lightTimer = (lightCloseTimer * 60000);
+
+            int progress = (int) (100 * lightTimeLeftInMilliseconds / lightTimer);
+            System.out.println(progress);
+            String timeLeftText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+            binding.lightCountDownTimerProgressBar.setProgress(progress);
+            binding.lightCountDownTimerTextView.setText(timeLeftText);
+        }
     }
 
     @Override
     public void onDestroyView()
     {
         super.onDestroyView();
+        if (gateCountDownTimer != null) {
+            gateCountDownTimer.cancel();
+        }
+        if (lightCountDownTimer != null) {
+            lightCountDownTimer.cancel();
+        }
         binding = null;
     }
-
 }

@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
@@ -20,15 +22,15 @@ public class UserGarageActionsListViewModel extends AndroidViewModel
     public UserGarageActionsListViewModel(@NonNull Application application)
     {
         super(application);
-        garageRepository = GarageRepository.getInstance();
         userRepository = UserRepository.getInstance();
+        userRepository.initAuth();
+        userRepository.initDatabase();
+        garageRepository = GarageRepository.getInstance();
+        garageRepository.initDatabase(FirebaseAuth.getInstance().getUid());
     }
 
-    public void init()
-    {
-        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
-        garageRepository.init(userId);
-    }
+
+
 
     public LiveData<List<GarageAction>> getUserGarageActions()
     {

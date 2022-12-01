@@ -15,14 +15,11 @@
                 android:shape="ring"
                 android:thicknessRatio="16"
                 android:useLevel="true">
-                <solid android:color="#1B5E20"/>
-                <gradient android:startColor="#388E3C"
-                    android:centerColor="#81C784"
-                    android:endColor="#388E3C"/>
+                <solid android:color="#FFEE58"/>
+
 
             </shape>
         </rotate>
 
     </item>
-
 </layer-list>

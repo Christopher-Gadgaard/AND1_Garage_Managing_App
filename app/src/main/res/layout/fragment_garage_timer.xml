@@ -7,30 +7,45 @@
     tools:context=".ui.garage.timer.GarageTimerFragment">
 
     <ProgressBar
-        android:id="@+id/countDownTimerProgressBar"
+        android:id="@+id/gateCountDownTimerProgressBar"
         android:layout_width="0dp"
         android:layout_height="350dp"
         android:indeterminateOnly="false"
         android:progress="100"
+        android:elevation="8dp"
         android:progressDrawable="@drawable/count_down_timer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
+    <ProgressBar
+        android:id="@+id/lightCountDownTimerProgressBar"
+        android:layout_width="92dp"
+        android:layout_height="175dp"
+        android:elevation="8dp"
+        android:indeterminateOnly="false"
+        android:progress="100"
+        android:visibility="invisible"
+        android:progressDrawable="@drawable/light_count_down_timer"
+        app:layout_constraintBottom_toBottomOf="@+id/garageLightsButton"
+        app:layout_constraintEnd_toEndOf="@+id/garageLightsButton"
+        app:layout_constraintStart_toStartOf="@+id/garageLightsButton"
+        app:layout_constraintTop_toBottomOf="@+id/gateCountDownTimerProgressBar" />
+
     <TextView
-        android:id="@+id/countDownTimerTextView"
+        android:id="@+id/gateCountDownTimerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/countDownTime"
+        android:visibility="invisible"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-
         android:textColor="#1B5E20"
         android:textSize="70sp"
-        app:layout_constraintBottom_toBottomOf="@+id/countDownTimerProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/countDownTimerProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/countDownTimerProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/countDownTimerProgressBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintTop_toTopOf="@+id/gateCountDownTimerProgressBar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openGarageButton"
@@ -39,6 +54,8 @@
         android:layout_marginEnd="32dp"
         android:clickable="true"
         android:contentDescription="@string/open_button"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:fabCustomSize="70dp"
         app:layout_constraintEnd_toStartOf="@+id/garageLightsButton"
         app:layout_constraintTop_toTopOf="@+id/garageLightsButton"
@@ -65,7 +82,7 @@
         app:fabCustomSize="62dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countDownTimerProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/gateCountDownTimerProgressBar"
         app:srcCompat="@drawable/bulb_off" />
 
 
@@ -73,14 +90,12 @@
         android:id="@+id/setGpsToGarageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/round_button"
         android:drawableLeft="@drawable/garage"
         android:drawableTint="@color/icon_color"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
-        android:onClick="signOut"
-        android:outlineAmbientShadowColor="@color/black"
         android:text="@string/go_to_garage"
         android:textAlignment="center"
         android:textAllCaps="true"
@@ -96,6 +111,30 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
+
+    <ImageView
+        android:id="@+id/gateCountDownTimerImageView"
+        android:layout_width="121dp"
+        android:layout_height="127dp"
+        android:src="@drawable/locked"
+        app:layout_constraintBottom_toBottomOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/gateCountDownTimerProgressBar"
+        app:layout_constraintTop_toTopOf="@+id/gateCountDownTimerProgressBar"
+        app:tint="@color/icon_color"
+        android:contentDescription="@string/locked_icon" />
+
+    <TextView
+        android:id="@+id/lightCountDownTimerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/countDownTime"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/garageLightsButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

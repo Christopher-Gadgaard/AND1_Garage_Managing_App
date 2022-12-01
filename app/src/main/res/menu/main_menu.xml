@@ -23,7 +23,7 @@
     <item android:title="Garage History"
         android:id="@+id/garageActionAdminFragment"
         android:icon="@drawable/ic_baseline_manage_history_24"
-        android:visible="false"
+        android:visible="true"
         />
 
     <item android:title="Manage Garage"

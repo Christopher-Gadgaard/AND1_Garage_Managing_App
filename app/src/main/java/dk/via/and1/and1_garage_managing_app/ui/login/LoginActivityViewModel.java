@@ -20,6 +20,7 @@ public class LoginActivityViewModel extends AndroidViewModel {
     {
         super(app);
         userRepository = UserRepository.getInstance();
+        userRepository.initAuth();
         result = new MutableLiveData<>();
     }
 

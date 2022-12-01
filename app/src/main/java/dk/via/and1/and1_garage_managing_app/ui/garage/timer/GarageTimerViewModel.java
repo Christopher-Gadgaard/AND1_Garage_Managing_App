@@ -1,15 +1,19 @@
 package dk.via.and1.and1_garage_managing_app.ui.garage.timer;
 
 import android.app.Application;
+import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Date;
+import java.util.Locale;
 
 import dk.via.and1.and1_garage_managing_app.data.garage.Garage;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
@@ -18,8 +22,8 @@ import dk.via.and1.and1_garage_managing_app.data.user.UserRepository;
 import dk.via.and1.and1_garage_managing_app.utils.MyCallback;
 
 public class GarageTimerViewModel extends AndroidViewModel {
-    UserRepository userRepository;
-    GarageRepository garageRepository;
+    private final UserRepository userRepository;
+    private final GarageRepository garageRepository;
 
     MutableLiveData<String> result;
 
@@ -27,19 +31,16 @@ public class GarageTimerViewModel extends AndroidViewModel {
     {
         super(application);
         userRepository = UserRepository.getInstance();
+        userRepository.initDatabase();
+
         garageRepository = GarageRepository.getInstance();
+        garageRepository.initDatabase(FirebaseAuth.getInstance().getUid());
         result = new MutableLiveData<>();
     }
 
-    public void init()
-    {
-
-    }
 
     public void garageAction(GarageAction garageAction)
     {
-        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
-        garageRepository.init(userId);
         garageRepository.garageAction(garageAction, new MyCallback() {
             @Override
             public void OnError(String message)
@@ -53,11 +54,6 @@ public class GarageTimerViewModel extends AndroidViewModel {
 
             }
         });
-    }
-
-    public LiveData<FirebaseUser> getCurrentFirebaseUser()
-    {
-        return userRepository.getUserAuthLiveData();
     }
 
     public void setGarageGateCloseTime(Date date)

@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        checkIfSignedIn();
         setContentView(binding.getRoot());
+        checkIfSignedIn();
         setupNavigation();
     }
 
@@ -76,27 +76,22 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
-    public void goToLoginActivity()
-    {
-        startActivity(new Intent(this, LoginActivity.class));
-    }
-
     private void checkIfSignedIn()
     {
         viewModel.getUserAuthLiveData().observe(this, user ->
         {
-            if (user != null) {
-                if (!user.getDisplayName().isEmpty())
-                {
-                    Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
+            if (user == null) {
                 goToLoginActivity();
             }
         });
     }
 
-    private void checkIfAdmin(Menu menu)
+    public void goToLoginActivity()
+    {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void checkIfAdmin(Menu menu)  //TODO ASK ABOUT THIS
     {
      /*   viewModel.getUser().observe(this, user->{
             if (user.getIsAdmin())

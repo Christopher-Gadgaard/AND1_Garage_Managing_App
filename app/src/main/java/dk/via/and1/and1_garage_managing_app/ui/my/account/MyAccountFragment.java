@@ -37,7 +37,6 @@ public class MyAccountFragment extends Fragment {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
 
         viewModel = new ViewModelProvider(this).get(MyAccountViewModel.class);
-        viewModel.init();
 
         //Making a toast based on the result of the update or password change;
         viewModel.getResult().observe(getViewLifecycleOwner(), result-> Toast.makeText(binding.getRoot().getContext(),result,Toast.LENGTH_LONG).show());

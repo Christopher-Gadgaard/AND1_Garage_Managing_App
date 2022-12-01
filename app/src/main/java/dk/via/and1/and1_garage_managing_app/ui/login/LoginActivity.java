@@ -33,6 +33,12 @@ public class LoginActivity extends AppCompatActivity
         email = findViewById(R.id.emailTextview);
         password = findViewById(R.id.passwordTextView);
         viewModel.getResult().observe(this,result-> Toast.makeText(this,result,Toast.LENGTH_SHORT).show());
+        viewModel.getCurrentFirebaseUser().observe(this, auth -> {
+        if (auth != null) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+    });
     }
 
     public void registerClick(View v)
@@ -63,12 +69,7 @@ public class LoginActivity extends AppCompatActivity
 
         viewModel.login(emailTemp,passwordTemp);
 
-        viewModel.getCurrentFirebaseUser().observe(this, auth -> {
-            if (auth != null) {
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
-            }
-        });
+
     }
 
     public void recoverPasswordClick(View view) //TODO MAKE ALERTDIALOG MATCH THEME

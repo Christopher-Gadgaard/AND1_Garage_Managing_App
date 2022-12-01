@@ -23,9 +23,8 @@ public class GarageInfoViewModel extends AndroidViewModel {
     {
         super(application);
         userRepository = UserRepository.getInstance();
+        userRepository.initDatabase();
         garageRepository = GarageRepository.getInstance();
-        String userId = userRepository.getUserAuthLiveData().getValue().getUid();
-        garageRepository.init(userId);
         result = new MutableLiveData<>();
     }
 

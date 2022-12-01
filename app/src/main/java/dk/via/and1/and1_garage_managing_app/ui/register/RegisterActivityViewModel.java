@@ -21,6 +21,7 @@ public class RegisterActivityViewModel extends AndroidViewModel {
     {
         super(app);
         userRepository = UserRepository.getInstance();
+        userRepository.initAuth();
         registerResult = new MutableLiveData<>();
     }
 

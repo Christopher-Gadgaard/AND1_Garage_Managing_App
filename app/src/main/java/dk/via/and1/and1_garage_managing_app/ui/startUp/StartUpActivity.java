@@ -1,4 +1,4 @@
-package dk.via.and1.and1_garage_managing_app;
+package dk.via.and1.and1_garage_managing_app.ui.startUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.ui.login.LoginActivity;
 import dk.via.and1.and1_garage_managing_app.ui.main.MainActivity;
 

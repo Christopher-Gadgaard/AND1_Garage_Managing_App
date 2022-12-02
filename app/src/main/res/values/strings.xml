@@ -36,4 +36,5 @@
     <string name="light_timer">Light Timer</string>
     <string name="gate_timer">Gate Timer</string>
     <string name="locked_icon">locked icon</string>
+    <string name="subject">Subject</string>
 </resources>

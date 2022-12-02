@@ -36,7 +36,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".StartUpActivity"
+            android:name=".ui.startUp.StartUpActivity"
             android:exported="true"
             android:label="My Garage"
             android:theme="@style/Theme.AND1_Garage_Managing_App.NoActionBar">

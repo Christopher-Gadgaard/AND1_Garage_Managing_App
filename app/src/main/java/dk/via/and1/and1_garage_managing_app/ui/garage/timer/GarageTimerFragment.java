@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,13 +21,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Date;
 import java.util.Locale;
 
+import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageActions;
+import dk.via.and1.and1_garage_managing_app.databinding.DialogChangePasswordBinding;
+import dk.via.and1.and1_garage_managing_app.databinding.DialogHelpBinding;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageTimerBinding;
 
 public class GarageTimerFragment extends Fragment {
     private FragmentGarageTimerBinding binding;
+    private DialogHelpBinding dialogBinding;
     private GarageTimerViewModel viewModel;
+
     private CountDownTimer gateCountDownTimer, lightCountDownTimer;
     private long gateTimeLeftInMilliseconds, lightTimeLeftInMilliseconds;
     private int gateCloseTimer, lightCloseTimer;
@@ -62,6 +68,33 @@ public class GarageTimerFragment extends Fragment {
         binding.garageLightsButton.setOnClickListener(v -> {
            onGarageLightsClick();
         });
+
+        binding.helpButton.setOnClickListener(v -> {
+            onHelpClick();
+        });
+    }
+
+    private void onHelpClick()
+    {
+        dialogBinding = DialogHelpBinding.inflate(getLayoutInflater());
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(binding.getRoot().getContext(), R.style.AlertDialog);
+        dialog.setView(dialogBinding.getRoot());
+        dialog.setTitle("Need help?");
+        dialog.setMessage("Send us an email and we will get back to you as soon as possible.");
+        dialog.setPositiveButton("Send", (dialog1, which) -> {
+            String subject = dialogBinding.editTextSubject.getText().toString();
+            String message = dialogBinding.editTextTextMultiLine.getText().toString();
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_EMAIL, "309283@via.dk");
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(intent);
+
+        });
+        dialog.setNegativeButton("Cancel", (dialog12, which) -> dialog12.dismiss());
+        dialog.create().show();
     }
 
     public void observeGarage()

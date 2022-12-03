@@ -38,6 +38,11 @@ public class GarageTimerViewModel extends AndroidViewModel {
         result = new MutableLiveData<>();
     }
 
+    public LiveData<FirebaseUser> getUserAuthLiveData()
+    {
+        return userRepository.getUserAuthLiveData();
+    }
+
 
     public void garageAction(GarageAction garageAction)
     {

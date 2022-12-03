@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity
 
     }
 
-    public void recoverPasswordClick(View view) //TODO MAKE ALERTDIALOG MATCH THEME
+    public void recoverPasswordClick(View view)
     {
         final EditText resetEmail = new EditText(view.getContext());
         final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext(),R.style.AlertDialog);

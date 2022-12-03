@@ -36,7 +36,7 @@ public class UserRepository {
     {
         database = FirebaseDatabase.getInstance();
         myUserRef = database.getReference("users");
-        userLiveData = new UserLiveData(myUserRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))); //TODO ASK ABOUT THIS
+        userLiveData = new UserLiveData(myUserRef.child(FirebaseAuth.getInstance().getUid())); //TODO ASK ABOUT THIS
     }
 
     public void initAuth()
@@ -102,7 +102,8 @@ public class UserRepository {
 
     public void updateUser(User user, MyCallback callback)
     {
-        myUserRef.setValue(user).addOnCompleteListener(e -> {
+        String userId = fAuth.getUid();
+        myUserRef.child(userId).setValue(user).addOnCompleteListener(e -> {
             if (e.isSuccessful()) {
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(user.getFirstName() + " " + user.getLastName())

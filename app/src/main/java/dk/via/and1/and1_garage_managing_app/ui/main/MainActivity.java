@@ -91,14 +91,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-    private void checkIfAdmin(Menu menu)  //TODO ASK ABOUT THIS
+    private void checkIfAdmin(Menu menu)
     {
-     /*   viewModel.getUser().observe(this, user->{
+       viewModel.getUser().observe(this, user->{
             if (user.getIsAdmin())
             {
              MenuItem item =  menu.findItem(R.id.garageActionAdminFragment);
+             MenuItem item2 =  menu.findItem(R.id.garageInfoFragment);
              item.setVisible(true);
+             item2.setVisible(true);
             }
-        });*/
+        });
     }
 }

@@ -168,12 +168,12 @@ public class GarageTimerFragment extends Fragment {
     public void onGarageLightsClick()
     {
         Date date = new Date();
-        String id = FirebaseAuth.getInstance().getUid(); //TODO ASK ABOUT THIS, every time i get it form the viewmodel i get exceptions
+        String id = viewModel.getUserAuthLiveData().getValue().getUid(); //TODO ASK ABOUT THIS, every time i get it form the viewmodel i get exceptions
 
         if (!isLightOn) {
             viewModel.garageAction(new GarageAction(id, date, GarageActions.LIGHTS_ON));
             long time = date.getTime();
-            viewModel.setGarageLightOffTime(new Date(time + ((long) lightCloseTimer * 60 * 1000))); //TODO: change to get from livedata
+            viewModel.setGarageLightOffTime(new Date(time + ((long) lightCloseTimer * 60 * 1000)));
         } else {
             viewModel.garageAction(new GarageAction(id, date, GarageActions.LIGHTS_OFF));
             viewModel.setGarageLightOffTime(new Date());
@@ -266,7 +266,6 @@ public class GarageTimerFragment extends Fragment {
             int lightTimer = (lightCloseTimer * 60000);
 
             int progress = (int) (100 * lightTimeLeftInMilliseconds / lightTimer);
-            System.out.println(progress);
             String timeLeftText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
             binding.lightCountDownTimerProgressBar.setProgress(progress);

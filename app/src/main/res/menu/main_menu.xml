@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-<!--TODO ASK ABOUT ICONS-->
 
     <item android:title="Logout"
         app:showAsAction="always"
@@ -23,13 +22,13 @@
     <item android:title="Garage History"
         android:id="@+id/garageActionAdminFragment"
         android:icon="@drawable/ic_baseline_manage_history_24"
-        android:visible="true"
+        android:visible="false"
         />
 
     <item android:title="Manage Garage"
         android:id="@+id/garageInfoFragment"
         android:icon="@drawable/garage"
-        android:visible="true"
+        android:visible="false"
         />
 
 </menu>

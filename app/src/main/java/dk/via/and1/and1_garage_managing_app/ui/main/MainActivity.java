@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -103,4 +102,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

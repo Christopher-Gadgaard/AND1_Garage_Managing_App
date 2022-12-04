@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.user.User;
 import dk.via.and1.and1_garage_managing_app.ui.main.MainActivity;
@@ -21,6 +23,7 @@ import dk.via.and1.and1_garage_managing_app.ui.login.LoginActivity;
 public class RegisterActivity extends AppCompatActivity {
     RegisterActivityViewModel viewModel;
     EditText editTextFirstName, editTextLastName, editTextEmail, editTextPhoneNo, editTextLicensePlate, editTextPassword, editTextConfirmPassword;
+    TextInputLayout textInputLayoutFirstName, textInputLayoutLastName, textInputLayoutEmail, textInputLayoutPhoneNo, textInputLayoutLicensePlate, textInputLayoutPassword, textInputLayoutConfirmPassword;
     ProgressBar progressBar;
     ConstraintLayout layout;
 
@@ -41,6 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
         editTextConfirmPassword = findViewById(R.id.passwordConfirmEditText);
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.constraintLayout);
+
+        textInputLayoutFirstName = findViewById(R.id.firstNameInputLayout);
+        textInputLayoutLastName = findViewById(R.id.lastNameInputLayout);
+        textInputLayoutEmail = findViewById(R.id.emailInputLayout);
+        textInputLayoutPhoneNo = findViewById(R.id.phoneInputLayout);
+        textInputLayoutLicensePlate = findViewById(R.id.licensePlateInputLayout);
+        textInputLayoutPassword = findViewById(R.id.passwordInputLayout);
+        textInputLayoutConfirmPassword = findViewById(R.id.passwordConfirmInputLayout);
+
     }
 
     public void registerUserClick(View v)
@@ -53,56 +65,56 @@ public class RegisterActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-      /*  if (firstName.isEmpty()) //TODO UNCOMMENT THIS
+        if (firstName.isEmpty())
         {
-            editTextFirstName.setError("Required*");
+            textInputLayoutFirstName.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (lastName.isEmpty()) {
-            editTextLastName.setError("Required*");
+            textInputLayoutLastName.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (email.isEmpty()) {
-            editTextEmail.setError("Required*");
+            textInputLayoutEmail.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (phoneNo.isEmpty()) {
-            editTextPhoneNo.setError("Required*");
+            textInputLayoutPhoneNo.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (licensePlate.isEmpty()) {
-            editTextLicensePlate.setError("Required*");
+            textInputLayoutLicensePlate.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            editTextPassword.setError("Required*");
+            textInputLayoutPassword.setError("Required*");
             editTextFirstName.requestFocus();
             return;
         }
         if (password.length() < 6) {
-            editTextPassword.setError("Password length 6-20 characters"); //TODO IMPLEMENT PASSWORD REGEX
+            textInputLayoutPassword.setError("Password length 6-20 characters");
             editTextFirstName.requestFocus();
             return;
         }
         if (!password.equals(confirmPassword)) {
-            editTextConfirmPassword.setError("Passwords Must Match");
+            textInputLayoutConfirmPassword.setError("Passwords Must Match");
             editTextFirstName.requestFocus();
             return;
-        }*/
+        }
 
         progressBar.setVisibility(View.VISIBLE);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
-        // User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
-        User user = new User("Christopher", "Gadgaard", "30305369", "Chg@gmail.com", "ch16786", false);
-        viewModel.registerUser(user, "1234567"); //TODO CHANGE TO REAl PASSWORD
+         User user = new User(firstName, lastName, phoneNo, email, licensePlate, false);
+
+        viewModel.registerUser(user, password);
 
         viewModel.getRegisterResult().observe(this, result -> {
 

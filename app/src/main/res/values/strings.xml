@@ -37,4 +37,5 @@
     <string name="gate_timer">Gate Timer</string>
     <string name="locked_icon">locked icon</string>
     <string name="subject">Subject</string>
+    <string name="travel_time_0">Travel Time: 0</string>
 </resources>

@@ -3,19 +3,26 @@ package dk.via.and1.and1_garage_managing_app.ui.garage.timer;
 import static dk.via.and1.and1_garage_managing_app.R.drawable.bulb_off;
 import static dk.via.and1.and1_garage_managing_app.R.drawable.bulb_on;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Date;
@@ -24,7 +31,7 @@ import java.util.Locale;
 import dk.via.and1.and1_garage_managing_app.R;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageAction;
 import dk.via.and1.and1_garage_managing_app.data.garage.GarageActions;
-import dk.via.and1.and1_garage_managing_app.databinding.DialogChangePasswordBinding;
+import dk.via.and1.and1_garage_managing_app.data.nav.NavResponse;
 import dk.via.and1.and1_garage_managing_app.databinding.DialogHelpBinding;
 import dk.via.and1.and1_garage_managing_app.databinding.FragmentGarageTimerBinding;
 
@@ -39,6 +46,10 @@ public class GarageTimerFragment extends Fragment {
     private Boolean isLightOn;
     private String city, postCode, street, streetNo;
 
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private String location;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -47,6 +58,7 @@ public class GarageTimerFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
@@ -71,6 +83,50 @@ public class GarageTimerFragment extends Fragment {
 
         binding.helpButton.setOnClickListener(v -> {
             onHelpClick();
+        });
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(binding.getRoot().getContext());
+
+        getLocation();
+
+        observeNav();
+
+        observeResult();
+    }
+
+    public void observeResult()
+    {
+        viewModel.getResult().observe(getViewLifecycleOwner(), result -> {
+            if (result != null) {
+                Toast.makeText(binding.getRoot().getContext(), result, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void observeNav()
+    {
+        viewModel.getNavResponse().observe(getViewLifecycleOwner(), response ->
+        {
+            if (response != null)
+            {
+                binding.travelTimeTextView.setVisibility(View.VISIBLE);
+                binding.travelTimeTextView.setText("Estimated time to garage:\n"+response.getDuration()+"\n"+response.getDistance());
+            }
+        });
+    }
+
+    private void getLocation()
+    {
+        if (ActivityCompat.checkSelfPermission(binding.getRoot().getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(binding.getRoot().getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        fusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                location = task.getResult().getLatitude() + "," + task.getResult().getLongitude();
+                viewModel.setNav(location);
+            }
         });
     }
 
@@ -151,7 +207,7 @@ public class GarageTimerFragment extends Fragment {
     public void onOpenGarageClick()
     {
         Date date = new Date();
-        String id = FirebaseAuth.getInstance().getUid();
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         viewModel.garageAction(new GarageAction(id, date, GarageActions.OPEN_GATE));
         long time = date.getTime();
         viewModel.setGarageGateCloseTime(new Date(time + ((long) gateCloseTimer * 60 * 1000)));
@@ -160,7 +216,7 @@ public class GarageTimerFragment extends Fragment {
     public void onCloseGarageClick()
     {
         Date date = new Date();
-        String id = FirebaseAuth.getInstance().getUid();
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         viewModel.garageAction(new GarageAction(id, date, GarageActions.CLOSE_GATE));
         viewModel.setGarageGateCloseTime(new Date());
     }
@@ -168,7 +224,7 @@ public class GarageTimerFragment extends Fragment {
     public void onGarageLightsClick()
     {
         Date date = new Date();
-        String id = viewModel.getUserAuthLiveData().getValue().getUid(); //TODO ASK ABOUT THIS, every time i get it form the viewmodel i get exceptions
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (!isLightOn) {
             viewModel.garageAction(new GarageAction(id, date, GarageActions.LIGHTS_ON));

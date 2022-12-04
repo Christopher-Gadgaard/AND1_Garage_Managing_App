@@ -1,5 +1,7 @@
 # AND1_Garage_Managing_App
-This Project aims to create an app for controlling the garage at an apartment complex.
+This Project aims to create an app for controlling the garage at an apartment complex. The inspiration for this came from my own apartment complex where we have a garage that opens when call a number. I don’t like the way it works now, because if you are talking on phone with someone on your way home you must hang up on that person, to call the garage. 
+
+Demo: https://www.youtube.com/watch?v=wkYf9kGyDFA
 
 ## User Stories:
 ### High
